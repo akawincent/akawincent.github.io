@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="BeNeRF: Neural Radiance Fields from a Single Blurry Image and Event Stream">
+  <meta name="keywords" content="Neural Radiance Fields, Event Stream, Pose Estimation, Deblurring, Novel View Synthesis, 3D from a Single Image">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BeNeRF</title>
+  <style>
+    .media-wrapper {
+        display: flex;
+        justify-content: space-between; 
+        gap: 10px; 
+    }
+
+    .media-container {
+        position: relative;
+    }
+
+    .hover-video {
+        display: none;
+        width: 300px; 
+    }
+
+    /* 设置图片的宽度 */
+    .hover-image {
+        object-fit: cover; 
+        width: 300px;
+    }
+
+    /* 定义闪烁动画 */
+    @keyframes blink {
+            0%, 100% {
+                opacity: 1; /* 不透明 */
+            }
+            50% {
+                opacity: 0; /* 透明 */
+            }
+    }
+
+    /* 应用闪烁动画 */
+    .blinking-text {
+        font-size: 20px; /* 字体大小 */
+        color: red; /* 字体颜色 */
+        animation: blink 1s infinite; /* 动画持续时间和无限循环 */
+    }
+  </style>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script> -->
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/smiling-face-with-horns_1f608.png">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title"><font color="#ffa500">BeNeRF</font>: Neural Radiance Fields from a Single <font color="#ffa500">B</font>lurry Image and <font color="#ffa500">E</font>vent Stream</h1>
+          <h1 class="title is-3 publication-title">ECCV 2024</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://akawincent.github.io">Wenpu Li</a><sup>1,5*</sup> &nbsp;&nbsp;
+            </span>
+            <span class="author-block">
+              <a href="https://github.com/pianwan">Wan Pian</a><sup>1,2*</sup> &nbsp;&nbsp;
+            </span>
+            <span class="author-block">
+              <a href="https://wangpeng000.github.io">Peng Wang</a><sup>1,3*</sup> &nbsp;&nbsp;
+            </span>
+            <span class="author-block">
+              <a href="https://jinghangli.github.io/">Jinghang Li</a><sup>4</sup> &nbsp;&nbsp;
+            </span>
+            <span class="author-block">
+              <a href="https://sites.google.com/view/zhouyi-joey/home">Yi Zhou</a><sup>4</sup> &nbsp;&nbsp;
+            </span>
+            <span class="author-block">
+              <a href="https://ethliup.github.io/">Peidong Liu</a><sup>1†</sup>
+            </span>
+
+            <div class="is-size-6 publication-authors">
+              <span class="author-block">
+                <sup>*</sup> denotes equal contribution.
+                <sup>†</sup> denotes corresponding author.
+              </span>
+            </div>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>Westlake University</span> &nbsp;
+            <span class="author-block"><sup>2</sup>EPFL</span> &nbsp;
+            <span class="author-block"><sup>3</sup>Zhejiang University</span> &nbsp;
+            <span class="author-block"><sup>4</sup>Hunan University</span> &nbsp;
+            <!-- </br> -->
+            <span class="author-block"><sup>5</sup>Guangdong University of Technology</span>
+            <br/>
+            <br/>
+            <image src="./demo/school.png" class="img-fluid" style="width: 50%;"></image>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2407.02174"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href="https://github.com/WU-CVGL/BeNeRF"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <h2 class="subtitle has-text-centered"> 
+        <b><font color="#ff0000">We explore the possibility of recovering the neural radiance fields and camera motion trajectory from a single blurry image!!</font></b>
+      </h2>  
+      <!-- </br>
+      </br>
+      <video id="bad-gaussians-decoration-fullres" autoplay muted loop playsinline height="100%">
+        <source src="./static/videos/bad-gaussians-decoration.x264.2400.3M.mp4"
+                type="video/mp4">
+      </video>
+      <h2 class="subtitle has-text-centered">
+        Given a set of severe motion blurred images, <b><font color="#f03a17">BAD-Gaussians</font></b> <font color="#c00000">jointly</font> learns the <font color="#067554">scene representation with 3D Gaussians</font>
+        and recovers the <font color="#209cee">camera motion trajectories</font> within exposure time. It achieves state-of-the-art performance on both synthetic and real datasets in deblurring and novel-view synthesis tasks, with faster training, realtime rendering and lower GPU memory consumption.
+      </h2> -->
+    </div>
+  </div>
+</section>
+
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <image src="./demo/benerf_teaser.png" class="img-responsive" alt="overview"><br>
+        <div class="content has-text-justified">
+          <p>
+            Implicit scene representation has attracted a lot of attention in recent research of computer vision and graphics. 
+            Most prior methods focus on how to reconstruct 3D scene representation from a set of images.  
+          </p>
+          <p>
+            In this work, we demonstrate the possibility to recover the neural radiance fields (NeRF) from a single blurry image and its corresponding event stream. 
+            To eliminate motion blur, we introduce event stream to regularize the learning process of NeRF by accumulating it into an image. 
+            We model the camera motion with a cubic B-Spline in SE(3) space. 
+            Both the blurry image and the brightness change within a time interval, can then be synthesized from the NeRF given the 6-DoF poses interpolated from the cubic B-Spline. 
+            Our method can jointly learn both the implicit scene representation and the camera motion by minimizing the differences between the synthesized data and the real measurements without any prior knowledge of camera poses.
+          </p>
+          <p>
+            We evaluate the proposed method with both synthetic and real datasets. 
+            The experimental results demonstrate that we are able to render view-consistent latent sharp images from the learned NeRF and bring a blurry image alive in high quality. 
+          </p>
+          <p>
+            <i>Keywords: Neural Radiance Fields, Event Stream, Pose Estimation, Deblurring, Novel View Synthesis, 3D from a Single Image</i>
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+
+    <!-- Pipeline. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Pipeline</h2>
+        <image src="./demo/pipeline.png" class="img-responsive" alt="overview"><br>
+        <div class="content has-text-justified">
+          <p>
+            Given a single blurry image and its corresponding event stream, our method recovers the underlying 3D scene representation and the camera motion trajectory jointly. 
+            In particular, we represent the 3D scene with neural radiance fields and the camera motion trajectory with a cubic B-Spline in SE(3) space. 
+            Both the blurry image and accumulated events within a time interval can thus be synthesized from the 3D scene representation providing the camera poses. 
+            The camera trajectory, NeRF, are then optimized by minimizing the difference between the synthesized data and the real measurements.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Pipeline. -->
+
+    <!-- Paper video. -->
+    <!-- <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Video</h2>
+        <div class="publication-video">
+          <iframe src="https://www.youtube.com/embed/xoES4eONYoA?rel=0&amp;showinfo=0"
+                  frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div> -->
+    <!--/ Paper video. -->
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Results. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Results</h2>
+        <div class="content has-text-justified">
+          <p>
+            The experimental results demonstrate that our method can learn accurate radiance fields from a single blurry image and event stream, 
+            enabling the rendering of view-consistent sharp images from the learned NeRF. 
+            <mark>Furthermore, Since our method can jointly recover scene representations and camera motion trajectories, 
+            it provides a powerful capability to decode a series of sharp images from a single blurry image, 
+            thus bringing the blurry image alive in high quality.</mark> 
+            </br>
+            <div class="blinking-text">
+              <center>****************You can hover over the image to view the output of our method.****************</center>
+            </div>
+            </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Results. -->
+
+    <!-- Paper video. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-size-5">Synthetic datasets</h2>
+        <div class="content has-text-justified">
+          <div class="media-wrapper">
+            <div class="media-container">
+              <img src="./results/livingroom_input.png" alt="Image 1" class="hover-image">
+              <video src="./results/livingrom_alive.mp4" class="hover-video" loop muted></video>
+            </div>
+
+            <div class="media-container">
+              <img src="./results/livingroom_2_input.png" alt="Image 2" class="hover-image">
+              <video src="./results/livingroom_2_alive.mp4" class="hover-video" loop muted></video>
+            </div>
+
+            <div class="media-container">
+              <img src="./results/livingroom_3_input.png" alt="Image 3" class="hover-image">
+              <video src="./results/livingroom_3_alive.mp4" class="hover-video" loop muted></video>
+            </div>
+          </div>
+          
+          </br>
+
+          <div class="media-wrapper">
+            <div class="media-container">
+              <img src="./results/pinkcastle_input.png" alt="Image 1" class="hover-image">
+              <video src="./results/pinkcastle_alive.mp4" class="hover-video" loop muted></video>
+            </div>
+
+            <div class="media-container">
+              <img src="./results/pinkcastle_2_input.png" alt="Image 2" class="hover-image">
+              <video src="./results/pinkcastle_2_alive.mp4" class="hover-video" loop muted></video>
+            </div>
+
+            <div class="media-container">
+              <img src="./results/pinkcastle_3_input.png" alt="Image 2" class="hover-image">
+              <video src="./results/pinkcastle_3_alive.mp4" class="hover-video" loop muted></video>
+            </div>
+          </div>
+          
+          </br>
+
+          <div class="media-wrapper">
+            <div class="media-container">
+              <img src="./results/whiteroom_input.png" alt="Image 1" class="hover-image">
+              <video src="./results/whiteroom_alive.mp4" class="hover-video" loop muted></video>
+            </div>
+
+            <div class="media-container">
+              <img src="./results/whiteroom_2_input.png" alt="Image 2" class="hover-image">
+              <video src="./results/whiteroom_2_alive.mp4" class="hover-video" loop muted></video>
+            </div>
+
+            <div class="media-container">
+              <img src="./results/whiteroom_3_input.png" alt="Image 2" class="hover-image">
+              <video src="./results/whiteroom_3_alive.mp4" class="hover-video" loop muted></video>
+            </div>
+          </div>
+
+          </br>
+
+          <div class="media-wrapper">
+            <div class="media-container">
+              <img src="./results/outdoorpool.png" alt="Image 1" class="hover-image">
+              <video src="./results/outdoorpool_alive.mp4" class="hover-video" loop muted></video>
+            </div>
+
+            <div class="media-container">
+              <img src="./results/outdoorpool_2_input.png" alt="Image 2" class="hover-image">
+              <video src="./results/outdoorpool_2_alive.mp4" class="hover-video" loop muted></video>
+            </div>
+
+            <div class="media-container">
+              <img src="./results/outdoorpool_3_input.png" alt="Image 2" class="hover-image">
+              <video src="./results/outdoorpool_3_alive.mp4" class="hover-video" loop muted></video>
+            </div>
+          </div>
+
+          </br>
+
+          <div class="media-wrapper">
+            <div class="media-container">
+              <img src="./results/tanabata_input.png" alt="Image 1" class="hover-image">
+              <video src="./results/tanabata_alive.mp4" class="hover-video" loop muted></video>
+            </div>
+
+            <div class="media-container">
+              <img src="./results/tanabata_2_input.png" alt="Image 2" class="hover-image">
+              <video src="./results/tanabata_2_alive.mp4" class="hover-video" loop muted></video>
+            </div>
+
+            <div class="media-container">
+              <img src="./results/tanabata_3_input.png" alt="Image 2" class="hover-image">
+              <video src="./results/tanabata_3_alive.mp4" class="hover-video" loop muted></video>
+            </div>
+          </div>
+    </div>
+
+    <h2 class="title is-size-5">Real-world datasets</h2>
+    <div class="content has-text-justified">
+
+      <div class="media-wrapper">
+        <div class="media-container">
+          <img src="./results/e2nerf_camera_1_input.jpg" alt="Image 1" class="hover-image">
+          <video src="./results/e2nerf_camera_1_alive.mp4" class="hover-video" loop muted></video>
+        </div>
+
+        <div class="media-container">
+          <img src="./results/e2nerf_camera_2_input.jpg" alt="Image 1" class="hover-image">
+          <video src="./results/e2nerf_camera_2_alive.mp4" class="hover-video" loop muted></video>
+        </div>
+        <div class="media-container">
+          <img src="./results/e2nerf_camera_3_input.jpg" alt="Image 1" class="hover-image">
+          <video src="./results/e2nerf_camera_3_alive.mp4" class="hover-video" loop muted></video>
+        </div>
+
+        <div class="media-container">
+          <img src="./results/e2nerf_camera_4_input.jpg" alt="Image 1" class="hover-image">
+          <video src="./results/e2nerf_camera_4_alive.mp4" class="hover-video" loop muted></video>
+        </div>
+
+        <div class="media-container">
+          <img src="./results/e2nerf_camera_5_input.jpg" alt="Image 1" class="hover-image">
+          <video src="./results/e2nerf_camera_5_alive.mp4" class="hover-video" loop muted></video>
+        </div>
+      </div>
+      
+      </br>
+
+      <div class="media-wrapper">
+        <div class="media-container">
+          <img src="./results/e2nerf_lego_1_input.jpg" alt="Image 1" class="hover-image">
+          <video src="./results/e2nerf_lego_1_alive.mp4" class="hover-video" loop muted></video>
+        </div>
+
+        <div class="media-container">
+          <img src="./results/e2nerf_lego_2_input.jpg" alt="Image 2" class="hover-image">
+          <video src="./results/e2nerf_lego_2_alive.mp4" class="hover-video" loop muted></video>
+        </div>
+
+        <div class="media-container">
+          <img src="./results/e2nerf_lego_3_input.jpg" alt="Image 2" class="hover-image">
+          <video src="./results/e2nerf_lego_3_alive.mp4" class="hover-video" loop muted></video>
+        </div>
+
+        <div class="media-container">
+          <img src="./results/e2nerf_lego_4_input.jpg" alt="Image 2" class="hover-image">
+          <video src="./results/e2nerf_lego_4_alive.mp4" class="hover-video" loop muted></video>
+        </div>
+
+        <div class="media-container">
+          <img src="./results/e2nerf_lego_5_input.jpg" alt="Image 2" class="hover-image">
+          <video src="./results/e2nerf_lego_5_alive.mp4" class="hover-video" loop muted></video>
+        </div>
+      </div>
+      
+      </br>
+
+      <div class="media-wrapper">
+        <div class="media-container">
+          <img src="./results/e2nerf_letter_1_input.jpg" alt="Image 1" class="hover-image">
+          <video src="./results/e2nerf_letter_1_alive.mp4" class="hover-video" loop muted></video>
+        </div>
+
+        <div class="media-container">
+          <img src="./results/e2nerf_letter_2_input.jpg" alt="Image 1" class="hover-image">
+          <video src="./results/e2nerf_letter_2_alive.mp4" class="hover-video" loop muted></video>
+        </div>
+
+        <div class="media-container">
+          <img src="./results/e2nerf_letter_3_input.jpg" alt="Image 1" class="hover-image">
+          <video src="./results/e2nerf_letter_3_alive.mp4" class="hover-video" loop muted></video>
+        </div>
+
+        <div class="media-container">
+          <img src="./results/e2nerf_letter_4_input.jpg" alt="Image 1" class="hover-image">
+          <video src="./results/e2nerf_letter_4_alive.mp4" class="hover-video" loop muted></video>
+        </div>
+
+        <div class="media-container">
+          <img src="./results/e2nerf_letter_5_input.jpg" alt="Image 1" class="hover-image">
+          <video src="./results/e2nerf_letter_5_alive.mp4" class="hover-video" loop muted></video>
+        </div>
+      </div>
+
+      </br>
+
+      <div class="media-wrapper">
+        <div class="media-container">
+          <img src="./results/e2nerf_plant_1_input.jpg" alt="Image 1" class="hover-image">
+          <video src="./results/e2nerf_plant_1_alive.mp4" class="hover-video" loop muted></video>
+        </div>
+
+        <div class="media-container">
+          <img src="./results/e2nerf_plant_2_input.jpg" alt="Image 1" class="hover-image">
+          <video src="./results/e2nerf_plant_2_alive.mp4" class="hover-video" loop muted></video>
+        </div>
+
+        <div class="media-container">
+          <img src="./results/e2nerf_plant_3_input.jpg" alt="Image 1" class="hover-image">
+          <video src="./results/e2nerf_plant_3_alive.mp4" class="hover-video" loop muted></video>
+        </div>
+
+        <div class="media-container">
+          <img src="./results/e2nerf_plant_4_input.jpg" alt="Image 1" class="hover-image">
+          <video src="./results/e2nerf_plant_4_alive.mp4" class="hover-video" loop muted></video>
+        </div>
+
+        <div class="media-container">
+          <img src="./results/e2nerf_plant_5_input.jpg" alt="Image 1" class="hover-image">
+          <video src="./results/e2nerf_plant_5_alive.mp4" class="hover-video" loop muted></video>
+        </div>
+      </div>
+
+      </br>
+
+      <div class="media-wrapper">
+        <div class="media-container">
+          <img src="./results/e2nerf_toys_1_input.jpg" alt="Image 1" class="hover-image">
+          <video src="./results/e2nerf_toys_1_alive.mp4" class="hover-video" loop muted></video>
+        </div>
+
+        <div class="media-container">
+          <img src="./results/e2nerf_toys_2_input.jpg" alt="Image 1" class="hover-image">
+          <video src="./results/e2nerf_toys_2_alive.mp4" class="hover-video" loop muted></video>
+        </div>
+
+        <div class="media-container">
+          <img src="./results/e2nerf_toys_3_input.jpg" alt="Image 1" class="hover-image">
+          <video src="./results/e2nerf_toys_3_alive.mp4" class="hover-video" loop muted></video>
+        </div>
+
+        <div class="media-container">
+          <img src="./results/e2nerf_toys_4_input.jpg" alt="Image 1" class="hover-image">
+          <video src="./results/e2nerf_toys_4_alive.mp4" class="hover-video" loop muted></video>
+        </div>
+
+        <div class="media-container">
+          <img src="./results/e2nerf_toys_5_input.jpg" alt="Image 1" class="hover-image">
+          <video src="./results/e2nerf_toys_5_alive.mp4" class="hover-video" loop muted></video>
+        </div>
+      </div>
+          
+      <script>
+          const mediaContainers = document.querySelectorAll('.media-container');
+
+          mediaContainers.forEach(container => {
+              const image = container.querySelector('.hover-image');
+              const video = container.querySelector('.hover-video');
+              // const image_real = container.querySelector('.hover-image-e2nerf-real');
+              // const video_real = container.querySelector('.hover-video-e2nerf-real');
+
+              image.addEventListener('mouseover', function() {
+                  image.style.display = 'none';
+                  video.style.display = 'block';
+                  video.play();
+              });
+
+              video.addEventListener('mouseleave', function() {
+                  video.style.display = 'none';
+                  image.style.display = 'block';
+                  video.pause();
+              });
+          });
+      </script>
+
+      <h2 class="title is-3"><center>Comparison</center></h2>
+
+      <div class="container_comop">
+          <img src="./comparison/comparison_1.png" alt="comparison_1">
+          </br>
+          <img src="./comparison/comparison_2.png" alt="comparison_2">
+      </div>
+
+
+
+    </div>
+    <!--/ Paper video. -->
+  </div>
+</section>
+
+
+
+<section class="teaser" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title is-3"> <center>Citation</center></h2>
+    <pre><code>@inproceedings{li2024benerf,
+      author = {Wenpu Li and Pian Wan and Peng Wang and Jinghang Li and Yi Zhou and Peidong Liu},
+      title = {BeNeRF: Neural Radiance Fields from a Single Blurry Image and Event Stream},
+      booktitle = {European Conference on Computer Vision (ECCV)},
+      year = {2024}
+  } </code></pre>
+  </br>
+  </br>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            The source code of this website is borrowed from 
+            <a href="https://github.com/nerfies/nerfies.github.io">nerfies</a>.
+          </p>
+          <p>
+            This website is licensed under a <a rel="license"
+                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+          <p>
+            This means you are free to borrow the <a
+              href="https://github.com/LingzheZhao/LingzheZhao.github.io/tree/main/BAD-Gaussians">source code</a> of this website,
+            we just ask that you link back to this page in the footer.
+            Please remember to remove the analytics code included in the header of the website which
+            you do not want on your website.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
