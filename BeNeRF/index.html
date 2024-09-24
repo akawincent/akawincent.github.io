@@ -45,6 +45,10 @@
         color: red; /* 字体颜色 */
         animation: blink 1s infinite; /* 动画持续时间和无限循环 */
     }
+
+    .large-text {
+            font-size: 20px; /* 增大字体大小 */
+    }
   </style>
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
@@ -150,6 +154,15 @@
                   <span>Code</span>
                   </a>
               </span>
+              <span class="link-block">
+                <a href="https://westlakeu-my.sharepoint.com/:f:/g/personal/cvgl_westlake_edu_cn/EjZNs8MwoXBDqT61v_j5V3EBIoKb8dG9KlYtYmLxcNJG_Q?e=AFXeUB"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <svg class="svg-inline--fa fa-images fa-w-18" aria-hidden="true" focusable="false" data-prefix="far" data-icon="images" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" data-fa-i2svg=""><path fill="currentColor" d="M480 416v16c0 26.51-21.49 48-48 48H48c-26.51 0-48-21.49-48-48V176c0-26.51 21.49-48 48-48h16v48H54a6 6 0 0 0-6 6v244a6 6 0 0 0 6 6h372a6 6 0 0 0 6-6v-10h48zm42-336H150a6 6 0 0 0-6 6v244a6 6 0 0 0 6 6h372a6 6 0 0 0 6-6V86a6 6 0 0 0-6-6zm6-48c26.51 0 48 21.49 48 48v256c0 26.51-21.49 48-48 48H144c-26.51 0-48-21.49-48-48V80c0-26.51 21.49-48 48-48h384zM264 144c0 22.091-17.909 40-40 40s-40-17.909-40-40 17.909-40 40-40 40 17.909 40 40zm-72 96l39.515-39.515c4.686-4.686 12.284-4.686 16.971 0L288 240l103.515-103.515c4.686-4.686 12.284-4.686 16.971 0L480 208v80H192v-48z"></path></svg>
+                  </span>
+                  <span>Data</span>
+                  </a>
+              </span>
             </div>
           </div>
         </div>
@@ -187,7 +200,7 @@
       <div class="column is-four-fifths">
         <h2 class="title is-3">Abstract</h2>
         <image src="./demo/benerf_teaser.png" class="img-responsive" alt="overview"><br>
-        <div class="content has-text-justified">
+        <div class="content has-text-justified", style="font-size: 20px;">
           <p>
             Implicit scene representation has attracted a lot of attention in recent research of computer vision and graphics. 
             Most prior methods focus on how to reconstruct 3D scene representation from a set of images.  
@@ -216,7 +229,7 @@
       <div class="column is-four-fifths">
         <h2 class="title is-3">Pipeline</h2>
         <image src="./demo/pipeline.png" class="img-responsive" alt="overview"><br>
-        <div class="content has-text-justified">
+        <div class="content has-text-justified", style="font-size: 20px;">
           <p>
             Given a single blurry image and its corresponding event stream, our method recovers the underlying 3D scene representation and the camera motion trajectory jointly. 
             In particular, we represent the 3D scene with neural radiance fields and the camera motion trajectory with a cubic B-Spline in SE(3) space. 
@@ -249,7 +262,7 @@
     <div class="columns is-centered has-text-centered">
       <div class="column is-four-fifths">
         <h2 class="title is-3">Results</h2>
-        <div class="content has-text-justified">
+        <div class="content has-text-justified", style="font-size: 20px;">
           <p>
             The experimental results demonstrate that our method can learn accurate radiance fields from a single blurry image and event stream, 
             enabling the rendering of view-consistent sharp images from the learned NeRF. 
@@ -258,7 +271,7 @@
             thus bringing the blurry image alive in high quality.</mark> 
             </br>
             <div class="blinking-text">
-              <center>****************You can hover over the image to view the output of our method.****************</center>
+              <center>Hover over or click the image to view the outputs of our method!</center>
             </div>
             </p>
         </div>
