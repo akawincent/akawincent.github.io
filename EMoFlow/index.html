@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="E-MoFlow: Learning Egomotion and Optical Flow from Event Data via Implicit Regularization">
+  <meta name="keywords" content="Self-Supervised Learning, 3D Vision, Optical flow Estimation, Motion Estimation, Event Camera">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>E-MoFlow</title>
+  <link rel="stylesheet" href="./static/css/custom.css">
+  <style>
+    .media-wrapper {
+        display: flex;
+        justify-content: space-between; 
+        gap: 10px; 
+    }
+
+    .media-container {
+        position: relative;
+    }
+
+    .hover-video {
+        display: none;
+        width: 300px; 
+    }
+
+    .hover-image {
+        object-fit: cover; 
+        width: 300px;
+    }
+
+    .invert {
+            filter: invert(1);
+    }
+
+    @keyframes blink {
+            0%, 100% {
+                opacity: 1; /* 不透明 */
+            }
+            50% {
+                opacity: 0; /* 透明 */
+            }
+    }
+
+    .blinking-text {
+        font-size: 20px; /* 字体大小 */
+        color: red; /* 字体颜色 */
+        animation: blink 1s infinite; /* 动画持续时间和无限循环 */
+    }
+
+    .large-text {
+            font-size: 20px; /* 增大字体大小 */
+    }
+
+    .keywords {
+        font-family: 'Google Sans', sans-serif;
+        background: linear-gradient(120deg, rgba(250,250,250,0.7), rgba(246,246,246,0.5));
+        border-radius: 8px;
+        padding: 15px 25px;
+        margin: 20px 0;
+        box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+        border-left: 4px solid #4a90e2;
+        transition: all 0.3s ease;
+    }
+
+    .keywords:hover {
+        transform: translateX(5px);
+        box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    }
+
+    .keywords i {
+        color: #666;
+        font-style: normal;
+        font-weight: 500;
+        letter-spacing: 0px;
+        line-height: 1.6;
+        word-spacing: -0.5px;
+    }
+
+    .citation-block {
+        max-width: 980px;
+        margin: 0 auto;
+    }
+
+    .citation-block pre {
+        background-color: #f5f5f5;
+        padding: 1.5em;
+        border-radius: 8px;
+        width: 100%;
+        font-size: 0.9em;
+    }
+
+    .pipeline-container {
+        max-width: 920px;
+        margin: 0 auto;
+    }
+
+    .pipeline-container img {
+        max-width: 100%;
+        height: auto;
+        margin: 1em auto;
+    }
+  </style>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script> -->
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/smiling-face-with-horns_1f608.png">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">
+            🥺
+            <span style="
+              font-family: 'Depres';
+              background: linear-gradient(to right, DarkBlue, 	DarkBlue); 
+              -webkit-background-clip: text; 
+              background-clip: text; 
+              color: transparent; 
+              font-size: 4rem;
+            ">E-MoFlow</span>
+          </h1>
+          <h2 class="title is-1 publication-title">
+            Learning 
+            <span style="
+              background: linear-gradient(to right, RoyalBlue, DarkViolet);
+              -webkit-background-clip: text;
+              background-clip: text;
+              color: transparent;
+            ">Egomotion</span> 
+            and 
+            <span style="
+              background: linear-gradient(to right, DarkViolet, RoyalBlue);
+              -webkit-background-clip: text;
+              background-clip: text;
+              color: transparent;
+            ">Optical Flow</span>
+            from 
+            </br>
+            Event Data via Implicit Regularization
+          </h2>
+        
+          <h1 class="title is-3 publication-title">NeurIPS 2025</h1>
+          <br/>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://akawincent.github.io"><b>Wenpu Li</b></a><sup>1*</sup> &nbsp;&nbsp;
+            </span>
+            <span class="author-block">
+              <a href="https://bangyan101.github.io/"><b>Bangyan Liao</b></a><sup>1,2*</sup> &nbsp;&nbsp;
+            </span>
+            <span class="author-block">
+              <a href="https://sites.google.com/view/zhouyi-joey/home"><b>Yi Zhou</b></a><sup>3</sup> &nbsp;&nbsp;
+            </span>
+            <span class="author-block">
+              <a href="https://github.com/insomniaaac"><b>Qi Xu</b></a><sup>1,4</sup> &nbsp;&nbsp;
+            </span>
+            <span class="author-block">
+              <a href="https://i.rm2.net/"><b>Pian Wan</b></a><sup>5</sup> &nbsp;&nbsp;
+            </span>
+            <span class="author-block">
+              <a href="https://ethliup.github.io/"><b>Peidong Liu</b></a><sup>1†</sup>
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>Westlake University</span> &nbsp;
+            <span class="author-block"><sup>2</sup>Zhejiang University</span> &nbsp;
+            <br/>
+            <span class="author-block"><sup>3</sup>Hunan University</span> &nbsp;
+            <span class="author-block"><sup>4</sup>Wuhan University</span> &nbsp;
+            <!-- </br> -->
+            <span class="author-block"><sup>5</sup>Georgia Institute of Technology</span>
+            <div class="is-size-6 publication-authors">
+              <span class="author-block">
+                <sup>*</sup> denotes equal contribution.
+                <sup>†</sup> denotes corresponding author.
+              </span>
+            </div>
+            <br/>
+            <image src="./demo/school.png" class="img-fluid" style="width: 50%;"></image>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2407.02174"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href="https://github.com/WU-CVGL/BeNeRF"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+              <span class="link-block">
+                <a href="https://westlakeu-my.sharepoint.com/:f:/g/personal/cvgl_westlake_edu_cn/EjZNs8MwoXBDqT61v_j5V3EBIoKb8dG9KlYtYmLxcNJG_Q?e=AFXeUB"
+                   class="external-link button is-normal is-rounded is-dark">
+                   <span class="icon">
+                    <svg class="svg-inline--fa fa-images fa-w-18" aria-hidden="true" focusable="false" data-prefix="far" data-icon="images" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" data-fa-i2svg=""><path fill="currentColor" d="M480 416v16c0 26.51-21.49 48-48 48H48c-26.51 0-48-21.49-48-48V176c0-26.51 21.49-48 48-48h16v48H54a6 6 0 0 0-6 6v244a6 6 0 0 0 6 6h372a6 6 0 0 0 6-6v-10h48zm42-336H150a6 6 0 0 0-6 6v244a6 6 0 0 0 6 6h372a6 6 0 0 0 6-6V86a6 6 0 0 0-6-6zm6-48c26.51 0 48 21.49 48 48v256c0 26.51-21.49 48-48 48H144c-26.51 0-48-21.49-48-48V80c0-26.51 21.49-48 48-48h384zM264 144c0 22.091-17.909 40-40 40s-40-17.909-40-40 17.909-40 40-40 40 17.909 40 40zm-72 96l39.515-39.515c4.686-4.686 12.284-4.686 16.971 0L288 240l103.515-103.515c4.686-4.686 12.284-4.686 16.971 0L480 208v80H192v-48z"></path></svg>
+                   </span>
+                  <span>Data</span>
+                  </a>
+              </span>
+              <span class="link-block">
+                <a href="demo/Poster.pdf"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <svg class="svg-inline--fa fa-file-pdf fa-w-12" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="file-pdf" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" data-fa-i2svg=""><path fill="currentColor" d="M181.9 256.1c-5-16-4.9-46.9-2-46.9 8.4 0 7.6 36.9 2 46.9zm-1.7 47.2c-7.7 20.2-17.3 43.3-28.4 62.7 18.3-7 39-17.2 62.9-21.9-12.7-9.6-24.9-23.4-34.5-40.8zM86.1 428.1c0 .8 13.2-5.4 34.9-40.2-6.7 6.3-29.1 24.5-34.9 40.2zM248 160h136v328c0 13.3-10.7 24-24 24H24c-13.3 0-24-10.7-24-24V24C0 10.7 10.7 0 24 0h200v136c0 13.2 10.8 24 24 24zm-8 171.8c-20-12.2-33.3-29-42.7-53.8 4.5-18.5 11.6-46.6 6.2-64.2-4.7-29.4-42.4-26.5-47.8-6.8-5 18.3-.4 44.1 8.1 77-11.6 27.6-28.7 64.6-40.8 85.8-.1 0-.1.1-.2.1-27.1 13.9-73.6 44.5-54.5 68 5.6 6.9 16 10 21.5 10 17.9 0 35.7-18 61.1-61.8 25.8-8.5 54.1-19.1 79-23.2 21.7 11.8 47.1 19.5 64 19.5 29.2 0 31.2-32 19.7-43.4-13.9-13.6-54.3-9.7-73.6-7.2zM377 105L279 7c-4.5-4.5-10.6-7-17-7h-6v128h128v-6.1c0-6.3-2.5-12.4-7-16.9zm-74.1 255.3c4.1-2.7-2.5-11.9-42.8-9 37.1 15.8 42.8 9 42.8 9z"></path></svg>
+                    <!-- <svg class="svg-inline--fa fa-images fa-w-18" aria-hidden="true" focusable="false" data-prefix="far" data-icon="images" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" data-fa-i2svg=""><path fill="currentColor" d="M480 416v16c0 26.51-21.49 48-48 48H48c-26.51 0-48-21.49-48-48V176c0-26.51 21.49-48 48-48h16v48H54a6 6 0 0 0-6 6v244a6 6 0 0 0 6 6h372a6 6 0 0 0 6-6v-10h48zm42-336H150a6 6 0 0 0-6 6v244a6 6 0 0 0 6 6h372a6 6 0 0 0 6-6V86a6 6 0 0 0-6-6zm6-48c26.51 0 48 21.49 48 48v256c0 26.51-21.49 48-48 48H144c-26.51 0-48-21.49-48-48V80c0-26.51 21.49-48 48-48h384zM264 144c0 22.091-17.909 40-40 40s-40-17.909-40-40 17.909-40 40-40 40 17.909 40 40zm-72 96l39.515-39.515c4.686-4.686 12.284-4.686 16.971 0L288 240l103.515-103.515c4.686-4.686 12.284-4.686 16.971 0L480 208v80H192v-48z"></path></svg> -->
+                  </span>
+                  <span>Poster</span>
+                  </a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- <section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <h2 class="subtitle has-text-centered"> 
+        <b><font color= RoyalBlue>Self-supervised joint learning of egomotion and optical flow through implicit geometric regularization</font></b>
+      </h2>   -->
+      <!-- </br>
+      </br>
+      <video id="bad-gaussians-decoration-fullres" autoplay muted loop playsinline height="100%">
+        <source src="./static/videos/bad-gaussians-decoration.x264.2400.3M.mp4"
+                type="video/mp4">
+      </video>
+      <h2 class="subtitle has-text-centered">
+        Given a set of severe motion blurred images, <b><font color="#f03a17">BAD-Gaussians</font></b> <font color="#c00000">jointly</font> learns the <font color="#067554">scene representation with 3D Gaussians</font>
+        and recovers the <font color="#209cee">camera motion trajectories</font> within exposure time. It achieves state-of-the-art performance on both synthetic and real datasets in deblurring and novel-view synthesis tasks, with faster training, realtime rendering and lower GPU memory consumption.
+      </h2> -->
+    <!-- </div>
+  </div>
+</section> -->
+
+
+<section class="hero teaser
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified", style="font-size: 18px;">
+          <div class="pipeline-container">
+            <div class="keywords">
+                <b>TL;DR</b>: Reavel that implicit regularizations can enable the mutual promotion of self-supervised learning for optical flow and egomotion
+                </br>
+                <b>Keywords</b>: Self-Supervised Learning, 3D Vision, Optical Flow Estimation, Motion Estimation, Event Camera
+            </div>
+          </div>
+        </div>
+        <div class="pipeline-container">
+        <image src="./demo/emoflow_teaser.png" class="img-responsive" alt="overview"><br>
+        <div class="content has-text-justified", style="font-size: 18px;">
+          <p>
+            The estimation of optical flow and 6-DoF ego-motion—two fundamental tasks in 3-D vision—has typically been addressed independently. 
+            For neuromorphic vision (e.g., event cameras), however, the lack of robust data association makes solving the two problems separately an ill-posed challenge, especially in the absence of supervision via ground truth.
+          </p>
+          <p>
+            Existing works mitigate this ill-posedness by either enforcing the smoothness of the flow field via an explicit variational regularizer or leveraging explicit structure-and-motion priors in the parametrization to improve event alignment.
+            The former notably introduces bias in results and computational overhead, while the latter—which parametrizes the optical flow in terms of the scene depth and the camera motion—often converges to suboptimal local minima.
+          </p>
+          <p>
+            To address these issues, we propose an unsupervised pipeline that jointly optimizes egomotion and flow via implicit spatial-temporal and geometric regularization. 
+            First, by modeling camera's egomotion as a continuous spline and optical flow as an implicit neural representation, our method inherently embeds spatial-temporal coherence through inductive biases. 
+            Second, we incorporate structure-and-motion priors through differential geometric constraints, bypassing explicit depth estimation while maintaining rigorous geometric consistency.
+            As a result, our framework <b>E-MoFlow</b> unifies egomotion and optical flow estimation via implicit regularization under a fully unsupervised paradigm. 
+          </p> 
+          <p>
+            Experiments demonstrate its versatility to general 6-DoF motion scenarios, achieving state-of-the-art performance among unsupervised methods and competitive even with supervised approaches. 
+          </p>
+        </div>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+    </br>
+    </br>
+    </br>
+    <!-- Pipeline. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Pipeline</h2>
+        <div class="pipeline-container">
+          <image src="./demo/emoflow_pipeline.png" class="img-responsive" alt="overview">
+          <image src="./demo/landscape_loss.jpg" class="img-responsive" alt="overview">
+          <div class="content has-text-justified", style="font-size: 18px;">
+            <p>
+              Given the input event data, we use differential flow loss and differential geometric loss to train the neural network and spline parameters. 
+              By jointly optimizing these two losses, we can avoid getting stuck in local minima, making it possible to solve the ill-posed problem through self-supervised learning.
+              Solid arrows denote the forward process; dashed arrows denote gradient backpropagation.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--/ Pipeline. -->
+
+    <!-- Paper video. -->
+    <!-- <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Video</h2>
+        <div class="publication-video">
+          <iframe src="https://www.youtube.com/embed/xoES4eONYoA?rel=0&amp;showinfo=0"
+                  frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div> -->
+    <!--/ Paper video. -->
+  </div>
+</section>
+
+</br>
+</br>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Results. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Results</h2>
+        <div class="content has-text-justified", style="font-size: 20px;">
+          <p>
+            The experimental results demonstrate that our method can learn accurate radiance fields from a single blurry image and event stream, 
+            enabling the rendering of view-consistent sharp images from the learned NeRF. 
+            <mark>Furthermore, Since our method can jointly recover scene representations and camera motion trajectories, 
+            it provides a powerful capability to decode a series of sharp images from a single blurry image, 
+            thus bringing the blurry image alive in high quality.</mark> 
+            </br>
+            <div class="blinking-text">
+              <center>Hover over or click the image to view the outputs of our method!</center>
+            </div>
+            </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Results. -->
+
+    <!-- Paper video. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-size-5">Synthetic datasets</h2>
+        <div class="content has-text-justified">
+          <div class="media-wrapper">
+            <div class="media-container">
+              <img src="./results/livingroom_input.png" alt="Image 1" class="hover-image">
+              <video src="./results/livingrom_alive.mp4" class="hover-video" loop muted></video>
+            </div>
+
+            <div class="media-container">
+              <img src="./results/livingroom_2_input.png" alt="Image 2" class="hover-image">
+              <video src="./results/livingroom_2_alive.mp4" class="hover-video" loop muted></video>
+            </div>
+
+            <div class="media-container">
+              <img src="./results/livingroom_3_input.png" alt="Image 3" class="hover-image">
+              <video src="./results/livingroom_3_alive.mp4" class="hover-video" loop muted></video>
+            </div>
+          </div>
+          
+          </br>
+
+          <div class="media-wrapper">
+            <div class="media-container">
+              <img src="./results/pinkcastle_input.png" alt="Image 1" class="hover-image">
+              <video src="./results/pinkcastle_alive.mp4" class="hover-video" loop muted></video>
+            </div>
+
+            <div class="media-container">
+              <img src="./results/pinkcastle_2_input.png" alt="Image 2" class="hover-image">
+              <video src="./results/pinkcastle_2_alive.mp4" class="hover-video" loop muted></video>
+            </div>
+
+            <div class="media-container">
+              <img src="./results/pinkcastle_3_input.png" alt="Image 2" class="hover-image">
+              <video src="./results/pinkcastle_3_alive.mp4" class="hover-video" loop muted></video>
+            </div>
+          </div>
+          
+          </br>
+
+          <div class="media-wrapper">
+            <div class="media-container">
+              <img src="./results/whiteroom_input.png" alt="Image 1" class="hover-image">
+              <video src="./results/whiteroom_alive.mp4" class="hover-video" loop muted></video>
+            </div>
+
+            <div class="media-container">
+              <img src="./results/whiteroom_2_input.png" alt="Image 2" class="hover-image">
+              <video src="./results/whiteroom_2_alive.mp4" class="hover-video" loop muted></video>
+            </div>
+
+            <div class="media-container">
+              <img src="./results/whiteroom_3_input.png" alt="Image 2" class="hover-image">
+              <video src="./results/whiteroom_3_alive.mp4" class="hover-video" loop muted></video>
+            </div>
+          </div>
+
+          </br>
+
+          <div class="media-wrapper">
+            <div class="media-container">
+              <img src="./results/outdoorpool.png" alt="Image 1" class="hover-image">
+              <video src="./results/outdoorpool_alive.mp4" class="hover-video" loop muted></video>
+            </div>
+
+            <div class="media-container">
+              <img src="./results/outdoorpool_2_input.png" alt="Image 2" class="hover-image">
+              <video src="./results/outdoorpool_2_alive.mp4" class="hover-video" loop muted></video>
+            </div>
+
+            <div class="media-container">
+              <img src="./results/outdoorpool_3_input.png" alt="Image 2" class="hover-image">
+              <video src="./results/outdoorpool_3_alive.mp4" class="hover-video" loop muted></video>
+            </div>
+          </div>
+
+          </br>
+
+          <div class="media-wrapper">
+            <div class="media-container">
+              <img src="./results/tanabata_input.png" alt="Image 1" class="hover-image">
+              <video src="./results/tanabata_alive.mp4" class="hover-video" loop muted></video>
+            </div>
+
+            <div class="media-container">
+              <img src="./results/tanabata_2_input.png" alt="Image 2" class="hover-image">
+              <video src="./results/tanabata_2_alive.mp4" class="hover-video" loop muted></video>
+            </div>
+
+            <div class="media-container">
+              <img src="./results/tanabata_3_input.png" alt="Image 2" class="hover-image">
+              <video src="./results/tanabata_3_alive.mp4" class="hover-video" loop muted></video>
+            </div>
+          </div>
+    </div>
+
+    <h2 class="title is-size-5">Real-world datasets</h2>
+    <div class="content has-text-justified">
+
+      <div class="media-wrapper">
+        <div class="media-container">
+          <img src="./results/e2nerf_camera_1_input.jpg" alt="Image 1" class="hover-image">
+          <video src="./results/e2nerf_camera_1_alive.mp4" class="hover-video" loop muted></video>
+        </div>
+
+        <div class="media-container">
+          <img src="./results/e2nerf_camera_2_input.jpg" alt="Image 1" class="hover-image">
+          <video src="./results/e2nerf_camera_2_alive.mp4" class="hover-video" loop muted></video>
+        </div>
+        <div class="media-container">
+          <img src="./results/e2nerf_camera_3_input.jpg" alt="Image 1" class="hover-image">
+          <video src="./results/e2nerf_camera_3_alive.mp4" class="hover-video" loop muted></video>
+        </div>
+
+        <div class="media-container">
+          <img src="./results/e2nerf_camera_4_input.jpg" alt="Image 1" class="hover-image">
+          <video src="./results/e2nerf_camera_4_alive.mp4" class="hover-video" loop muted></video>
+        </div>
+
+        <div class="media-container">
+          <img src="./results/e2nerf_camera_5_input.jpg" alt="Image 1" class="hover-image">
+          <video src="./results/e2nerf_camera_5_alive.mp4" class="hover-video" loop muted></video>
+        </div>
+      </div>
+      
+      </br>
+
+      <div class="media-wrapper">
+        <div class="media-container">
+          <img src="./results/e2nerf_lego_1_input.jpg" alt="Image 1" class="hover-image">
+          <video src="./results/e2nerf_lego_1_alive.mp4" class="hover-video" loop muted></video>
+        </div>
+
+        <div class="media-container">
+          <img src="./results/e2nerf_lego_2_input.jpg" alt="Image 2" class="hover-image">
+          <video src="./results/e2nerf_lego_2_alive.mp4" class="hover-video" loop muted></video>
+        </div>
+
+        <div class="media-container">
+          <img src="./results/e2nerf_lego_3_input.jpg" alt="Image 2" class="hover-image">
+          <video src="./results/e2nerf_lego_3_alive.mp4" class="hover-video" loop muted></video>
+        </div>
+
+        <div class="media-container">
+          <img src="./results/e2nerf_lego_4_input.jpg" alt="Image 2" class="hover-image">
+          <video src="./results/e2nerf_lego_4_alive.mp4" class="hover-video" loop muted></video>
+        </div>
+
+        <div class="media-container">
+          <img src="./results/e2nerf_lego_5_input.jpg" alt="Image 2" class="hover-image">
+          <video src="./results/e2nerf_lego_5_alive.mp4" class="hover-video" loop muted></video>
+        </div>
+      </div>
+      
+      </br>
+
+      <div class="media-wrapper">
+        <div class="media-container">
+          <img src="./results/e2nerf_letter_1_input.jpg" alt="Image 1" class="hover-image">
+          <video src="./results/e2nerf_letter_1_alive.mp4" class="hover-video" loop muted></video>
+        </div>
+
+        <div class="media-container">
+          <img src="./results/e2nerf_letter_2_input.jpg" alt="Image 1" class="hover-image">
+          <video src="./results/e2nerf_letter_2_alive.mp4" class="hover-video" loop muted></video>
+        </div>
+
+        <div class="media-container">
+          <img src="./results/e2nerf_letter_3_input.jpg" alt="Image 1" class="hover-image">
+          <video src="./results/e2nerf_letter_3_alive.mp4" class="hover-video" loop muted></video>
+        </div>
+
+        <div class="media-container">
+          <img src="./results/e2nerf_letter_4_input.jpg" alt="Image 1" class="hover-image">
+          <video src="./results/e2nerf_letter_4_alive.mp4" class="hover-video" loop muted></video>
+        </div>
+
+        <div class="media-container">
+          <img src="./results/e2nerf_letter_5_input.jpg" alt="Image 1" class="hover-image">
+          <video src="./results/e2nerf_letter_5_alive.mp4" class="hover-video" loop muted></video>
+        </div>
+      </div>
+
+      </br>
+
+      <div class="media-wrapper">
+        <div class="media-container">
+          <img src="./results/e2nerf_plant_1_input.jpg" alt="Image 1" class="hover-image">
+          <video src="./results/e2nerf_plant_1_alive.mp4" class="hover-video" loop muted></video>
+        </div>
+
+        <div class="media-container">
+          <img src="./results/e2nerf_plant_2_input.jpg" alt="Image 1" class="hover-image">
+          <video src="./results/e2nerf_plant_2_alive.mp4" class="hover-video" loop muted></video>
+        </div>
+
+        <div class="media-container">
+          <img src="./results/e2nerf_plant_3_input.jpg" alt="Image 1" class="hover-image">
+          <video src="./results/e2nerf_plant_3_alive.mp4" class="hover-video" loop muted></video>
+        </div>
+
+        <div class="media-container">
+          <img src="./results/e2nerf_plant_4_input.jpg" alt="Image 1" class="hover-image">
+          <video src="./results/e2nerf_plant_4_alive.mp4" class="hover-video" loop muted></video>
+        </div>
+
+        <div class="media-container">
+          <img src="./results/e2nerf_plant_5_input.jpg" alt="Image 1" class="hover-image">
+          <video src="./results/e2nerf_plant_5_alive.mp4" class="hover-video" loop muted></video>
+        </div>
+      </div>
+
+      </br>
+
+      <div class="media-wrapper">
+        <div class="media-container">
+          <img src="./results/e2nerf_toys_1_input.jpg" alt="Image 1" class="hover-image">
+          <video src="./results/e2nerf_toys_1_alive.mp4" class="hover-video" loop muted></video>
+        </div>
+
+        <div class="media-container">
+          <img src="./results/e2nerf_toys_2_input.jpg" alt="Image 1" class="hover-image">
+          <video src="./results/e2nerf_toys_2_alive.mp4" class="hover-video" loop muted></video>
+        </div>
+
+        <div class="media-container">
+          <img src="./results/e2nerf_toys_3_input.jpg" alt="Image 1" class="hover-image">
+          <video src="./results/e2nerf_toys_3_alive.mp4" class="hover-video" loop muted></video>
+        </div>
+
+        <div class="media-container">
+          <img src="./results/e2nerf_toys_4_input.jpg" alt="Image 1" class="hover-image">
+          <video src="./results/e2nerf_toys_4_alive.mp4" class="hover-video" loop muted></video>
+        </div>
+
+        <div class="media-container">
+          <img src="./results/e2nerf_toys_5_input.jpg" alt="Image 1" class="hover-image">
+          <video src="./results/e2nerf_toys_5_alive.mp4" class="hover-video" loop muted></video>
+        </div>
+      </div>
+          
+      <script>
+          const mediaContainers = document.querySelectorAll('.media-container');
+
+          mediaContainers.forEach(container => {
+              const image = container.querySelector('.hover-image');
+              const video = container.querySelector('.hover-video');
+              // const image_real = container.querySelector('.hover-image-e2nerf-real');
+              // const video_real = container.querySelector('.hover-video-e2nerf-real');
+
+              image.addEventListener('mouseover', function() {
+                  image.style.display = 'none';
+                  video.style.display = 'block';
+                  video.play();
+              });
+
+              video.addEventListener('mouseleave', function() {
+                  video.style.display = 'none';
+                  image.style.display = 'block';
+                  video.pause();
+              });
+          });
+      </script>
+
+      <h2 class="title is-3"><center>Comparison</center></h2>
+
+      <div class="container_comop">
+          <img src="./comparison/comparison_1.png" alt="comparison_1">
+          </br>
+          <img src="./comparison/comparison_2.png" alt="comparison_2">
+      </div>
+
+
+
+    </div>
+    <!--/ Paper video. -->
+  </div>
+</section>
+
+
+
+<section class="teaser" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title is-3"> <center>Citation</center></h2>
+    <div class="citation-block">
+      <pre><code>@inproceedings{li2025emoflow,
+      author = {Wenpu Li and Bangyan Liao and Yi Zhou and Qi Xu and Pian Wan and Peidong Liu},
+      title = {E-MoFlow: Learning Egomotion and Optical Flow from Event Data via Implicit Regularization},
+      booktitle = {Annual Conference on Neural Information Processing Systems (NeurIPS)},
+      year = {2025}
+  } </code></pre>
+    </div>
+  </br>
+  </br>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            The source code of this website is borrowed from 
+            <a href="https://github.com/nerfies/nerfies.github.io">nerfies</a>.
+          </p>
+          <p>
+            This website is licensed under a <a rel="license"
+                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+          <p>
+            This means you are free to borrow the <a
+              href="https://github.com/akawincent/akawincent.github.io/tree/master/BeNeRF">source code</a> of this website,
+            we just ask that you link back to this page in the footer.
+            Please remember to remove the analytics code included in the header of the website which
+            you do not want on your website.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
+
