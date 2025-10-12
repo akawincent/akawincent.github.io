@@ -94,10 +94,11 @@ body {
     width: 100%;
     height: 0;
     padding-bottom: 56.25%;
-
     overflow: hidden;
     border-radius: 10px !important;
 }
+
+
 
 .publication-video iframe {
     position: absolute;
@@ -112,19 +113,25 @@ body {
 
 .results-carousel {
   overflow: hidden;
+  max-width: 100%;
+  margin: 0 auto;
+  background-color: #000;
 }
 
 .results-carousel .item {
-  margin: 5px;
+  margin: 5px auto;
   overflow: hidden;
-  border: 1px solid #bbb;
   border-radius: 10px;
   padding: 0;
   font-size: 0;
+  width: 80%;
 }
 
 .results-carousel video {
-  margin: 0;
+  width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
 }
 
 
