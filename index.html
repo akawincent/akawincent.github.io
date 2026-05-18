@@ -726,24 +726,108 @@
           }
           .project-list {
             display: grid;
-            gap: 16px;
-            margin-top: 24px;
+            gap: 0;
+            margin-top: 28px;
           }
           .project-card {
             display: grid;
-            grid-template-columns: 230px minmax(0, 1fr);
-            gap: 22px;
-            padding: 18px;
-            background: rgba(18, 27, 42, 0.72);
-            border: 1px solid var(--border);
-            border-radius: 8px;
+            grid-template-columns: minmax(320px, 0.95fr) minmax(0, 1fr);
+            gap: 34px;
+            align-items: center;
+            padding: 0 0 38px;
+            background: transparent;
+            border: 0;
+            border-radius: 0;
+          }
+          .project-card + .project-card {
+            padding-top: 38px;
+            border-top: 1px solid rgba(180, 196, 216, 0.1);
+          }
+          .project-video-panel {
+            position: relative;
+            overflow: hidden;
+            background: #05070d;
+            border-radius: 4px;
+            box-shadow: 0 18px 38px rgba(0, 0, 0, 0.2);
+          }
+          .project-video-panel video {
+            display: block;
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            object-fit: cover;
+            background: #05070d;
+          }
+          .project-video-panel-portrait {
+            max-width: 360px;
+            margin-right: auto;
+            margin-left: auto;
+          }
+          .project-video-panel-portrait video {
+            aspect-ratio: 3 / 4;
+            object-fit: cover;
+          }
+          .project-video-play {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            background:
+              linear-gradient(180deg, rgba(5, 7, 13, 0.02), rgba(5, 7, 13, 0.28));
+            border: 0;
+            cursor: pointer;
+            transition:
+              opacity 220ms ease,
+              background-color 220ms ease;
+          }
+          .project-video-play span {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 62px;
+            height: 62px;
+            border: 1px solid rgba(221, 236, 241, 0.38);
+            border-radius: 50%;
+            background: rgba(5, 7, 13, 0.54);
+            box-shadow:
+              0 0 18px rgba(118, 235, 214, 0.2),
+              0 0 32px rgba(142, 170, 255, 0.1),
+              inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(8px);
+          }
+          .project-video-play span::before {
+            content: "";
+            width: 0;
+            height: 0;
+            margin-left: 4px;
+            border-top: 11px solid transparent;
+            border-bottom: 11px solid transparent;
+            border-left: 17px solid rgba(244, 247, 251, 0.94);
+          }
+          .project-video-play:hover,
+          .project-video-play:focus-visible {
+            background: rgba(5, 7, 13, 0.18);
+            outline: none;
+          }
+          .project-video-panel.is-playing .project-video-play {
+            opacity: 0;
+            pointer-events: none;
+          }
+          .project-copy {
+            min-width: 0;
+          }
+          .project-copy .paper-authors {
+            margin-top: 8px;
           }
           .project-card img {
             width: 100%;
             aspect-ratio: 4 / 3;
             object-fit: cover;
-            border: 1px solid var(--border-soft);
-            border-radius: 6px;
+            border: 0;
+            border-radius: 4px;
+            box-shadow: 0 18px 38px rgba(0, 0, 0, 0.18);
           }
           .project-card .paper-title {
             font-size: 17.5px;
@@ -862,9 +946,107 @@
             }
           }
           .project-card p {
-            margin-top: 10px;
+            margin-top: 50px;
             margin-bottom: 0;
             line-height: 1.55;
+          }
+          .opensource-list {
+            display: grid;
+            gap: 0;
+            margin-top: 28px;
+          }
+          .opensource-card {
+            display: grid;
+            grid-template-columns: minmax(320px, 0.92fr) minmax(0, 1fr);
+            gap: 36px;
+            align-items: center;
+            padding-bottom: 38px;
+          }
+          .opensource-visual {
+            display: block;
+            overflow: hidden;
+            background:
+              linear-gradient(145deg, rgba(95, 183, 255, 0.08), rgba(226, 184, 107, 0.05)),
+              #080d16;
+            border: 1px solid rgba(180, 196, 216, 0.12);
+            border-radius: 4px;
+            box-shadow: 0 18px 38px rgba(0, 0, 0, 0.2);
+          }
+          .opensource-visual img {
+            display: block;
+            width: 100%;
+            aspect-ratio: 1280 / 769;
+            object-fit: contain;
+          }
+          .opensource-copy {
+            min-width: 0;
+          }
+          .opensource-card .paper-title {
+            font-size: 19px;
+          }
+          .opensource-card .paper-title a {
+            color: var(--text-strong);
+            text-decoration: none;
+          }
+          .opensource-card .paper-title a:hover,
+          .opensource-card .paper-title a:focus-visible {
+            background: linear-gradient(90deg, #f8efe2 0%, var(--accent-gold) 46%, #de7a67 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            -webkit-text-fill-color: transparent;
+            text-decoration: underline;
+            text-decoration-color: rgba(226, 184, 107, 0.9);
+          }
+          .opensource-summary {
+            margin-top: 10px;
+            margin-bottom: 0;
+            color: var(--text-muted);
+            line-height: 1.55;
+          }
+          .opensource-contributions {
+            display: grid;
+            gap: 10px;
+            padding-left: 0;
+            margin-top: 16px;
+            margin-bottom: 0;
+            list-style: none;
+          }
+          .opensource-contributions li {
+            position: relative;
+            padding-left: 18px;
+            color: var(--text);
+            line-height: 1.48;
+          }
+          .opensource-contributions li::before {
+            content: "";
+            position: absolute;
+            top: 0.72em;
+            left: 0;
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-gold), var(--accent-red));
+          }
+          .contribution-links {
+            display: inline-flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-left: 4px;
+            white-space: normal;
+          }
+          .contribution-links a {
+            color: var(--link);
+            font-family: var(--font-ui);
+            font-size: 13px;
+            font-weight: 600;
+            text-decoration: none;
+          }
+          .contribution-links a:hover,
+          .contribution-links a:focus-visible {
+            color: #f0d9b5;
+            text-decoration: underline;
+            text-decoration-color: var(--accent-gold);
           }
           .detail-list {
             padding-left: 0;
@@ -894,6 +1076,9 @@
               width: 100%;
             }
             .project-card {
+              grid-template-columns: 1fr;
+            }
+            .opensource-card {
               grid-template-columns: 1fr;
             }
           }
@@ -1487,49 +1672,105 @@
                     <h1>Robotics Experience</h1>
                 </div>
 
-                <div class='project-list'>
-                    <div class='project-card'>
-                        <img src='imgs/Robot.jpg' class='img-fluid'>
-                        <div>
-                        <div class='paper-title'>
-                            Wheeled Robot Equipped with a Robotic Arm for Automatic Storage
-                        </div>
-                        <div class='paper-desc'>
-                            Automatic Storage/Retrieval System at Robocup China open, 2021
-                        </div>
-                        <div class='paper-authors'>
-                            Qingrui Zhu*, <b>Wenpu Li*</b>, Wenbin Zheng, Yong Zhang, Junyao Li
-                        </div>
-                        <div class='project-links'>
-                            <a href="https://github.com/akawincent/2021-robocup-AS-RS" target="_blank" rel="noreferrer">Code</a>
-                        </div>
-                        <p>TL;DR: I developed software for robot navigation, localization, object recognition, and control to complete the automatic storage task.</p>
-                        </div>
-                    </div>
+	                <div class='project-list'>
+	                    <div class='project-card'>
+	                        <div class='project-video-panel project-video-panel-portrait'>
+	                            <video controls muted playsinline preload="metadata" poster="imgs/robotics/humanoid-cover.png">
+	                                <source src="imgs/robotics/humanoid-42s.mp4" type="video/mp4">
+	                            </video>
+	                            <button class='project-video-play' type='button' aria-label='Play humanoid demo'>
+	                                <span aria-hidden='true'></span>
+	                            </button>
+	                        </div>
+	                        <div class='project-copy'>
+	                        <div class='paper-title'>
+	                            Humanoid Policy Reproduction and Real-Robot Deployment
+	                        </div>
+	                        <div class='paper-authors'>
+	                            Xiang Liu*, <b>Wenpu Li*</b>, Lingzhe Zhao*
+	                        </div>
+	                        <p>Reproduced GMT and UH-1 across motion retargeting, policy inference, and real-robot deployment pipelines, then deployed policies on the Unitree G-1 to gain hands-on experience with sim-to-real transfer, whole-body control, and text-to-motion control.</p>
+	                        </div>
+	                    </div>
 
-                    <div class='project-card'>
-                        <img src='imgs/drone.jpg' class='img-fluid'>
-                        <div>
-                        <div class='paper-title'>
-                            Self-Localization UAV Leveraging Visual Odometry
-                        </div>
-                        <div class='paper-desc'>
-                            Course Project, 2023
-                        </div>
-                        <div class='paper-authors'>
-                            <b>Wenpu Li*</b>, Guohua Zhang*
-                        </div>
-                        <div class='project-links'>
-                            <a href="https://github.com/StarLab317/VIO-Framework-for-Copter" target="_blank" rel="noreferrer">Drone code</a>
-                            <a href="https://github.com/akawincent/ZED-data-collector" target="_blank" rel="noreferrer">ZED collector</a>
-                            <a href="https://www.bilibili.com/video/BV1ux4y1o75J/?spm_id_from=333.999.0.0&vd_source=12e3449d762538513192f94a7582c3bd" target="_blank" rel="noreferrer">Video</a>
-                        </div>
-                        <p>
-                            TL;DR: I worked with <a href="https://github.com/guohua-zhang">Guohua Zhang</a> on deploying an Intel T265 camera and visual odometry for UAV localization.
-                            I also used a ZED camera to collect datasets for evaluating
-                            <a href="https://github.com/raulmur/ORB_SLAM2">ORB-SLAM2</a> and
-                            <a href="https://github.com/JiatianWu/stereo-dso">Stereo-DSO</a>.
-                        </p>
+	                    <div class='project-card'>
+	                        <div class='project-video-panel'>
+	                            <video controls muted playsinline preload="metadata" poster="imgs/Robot.jpg">
+	                                <source src="imgs/robotics/robocup.mp4" type="video/mp4">
+	                            </video>
+	                            <button class='project-video-play' type='button' aria-label='Play robot demo'>
+	                                <span aria-hidden='true'></span>
+	                            </button>
+	                        </div>
+	                        <div class='project-copy'>
+	                        <div class='paper-title'>
+	                            Wheeled Robot Equipped with an Arm for Automatic Storage
+	                        </div>
+	                        <div class='paper-authors'>
+	                            Qingrui Zhu*, <b>Wenpu Li*</b>, Wenbin Zheng, Yong Zhang, Junyao Li
+	                        </div>
+	                        <p>Built a wheeled robot with an onboard arm for automated warehouse sorting. The system integrated STM32, Raspberry Pi, and OpenMV hardware, implemented forward and inverse kinematics for arm control, designed communication and motion control for the mobile chassis, and used visual recognition algorithms.</p>
+	                        </div>
+	                    </div>
+
+	                    <div class='project-card'>
+	                        <div class='project-video-panel'>
+	                            <video controls muted playsinline preload="metadata" poster="imgs/drone.jpg">
+	                                <source src="imgs/robotics/uav.mp4" type="video/mp4">
+	                            </video>
+	                            <button class='project-video-play' type='button' aria-label='Play UAV demo'>
+	                                <span aria-hidden='true'></span>
+	                            </button>
+	                        </div>
+	                        <div class='project-copy'>
+	                        <div class='paper-title'>
+	                            Self-Localization UAV Leveraging Visual Odometry
+	                        </div>
+	                        <div class='paper-authors'>
+	                            <b>Wenpu Li*</b>, Guohua Zhang*
+	                        </div>
+	                        <p>Deployed RealSense T265 and ZED cameras for UAV visual odometry, and evaluated ORB-SLAM2, Stereo-DSO, and other SLAM algorithms in real-world flight scenarios.</p>
+	                        </div>
+	                    </div>
+                </div>
+
+                <div class='vspace-top' id='open-source-project'>
+                    <h1>Open-Source Project</h1>
+                </div>
+
+                <div class='opensource-list'>
+                    <div class='opensource-card'>
+                        <a class='opensource-visual' href="https://github.com/EvolvingLMMs-Lab/lmms-eval" target="_blank" rel="noreferrer" aria-label="Open the LMMs-Eval GitHub repository">
+                            <img src='imgs/opensource/lmms-eval-hero.png' class='img-fluid' width="1280" height="769" alt="LMMs-Eval project visual">
+                        </a>
+                        <div class='opensource-copy'>
+                            <div class='paper-title'>
+                                <a href="https://github.com/EvolvingLMMs-Lab/lmms-eval" target="_blank" rel="noreferrer">LMMs-Eval: Probing Intelligence in the Real World</a>
+                            </div>
+                            <p class='opensource-summary'>
+                                A unified evaluation toolkit for large multimodal models across text, image, video, and audio tasks, with an emphasis on reproducible, efficient, and trustworthy evaluation.
+                            </p>
+                            <ul class='opensource-contributions'>
+                                <li>
+                                    Added the VSI-SUPER benchmark and Cambrian-S model support for spatial and video understanding tasks.
+                                    <span class='contribution-links'>
+                                        <a href="https://github.com/EvolvingLMMs-Lab/lmms-eval/pull/1267" target="_blank" rel="noreferrer">#1267</a>
+                                        <a href="https://github.com/EvolvingLMMs-Lab/lmms-eval/pull/1268" target="_blank" rel="noreferrer">#1268</a>
+                                    </span>
+                                </li>
+                                <li>
+                                    Resolved Qwen3-VL and Qwen2.5-VL video bugs affecting timestamp alignment and temporal position encoding.
+                                    <span class='contribution-links'>
+                                        <a href="https://github.com/EvolvingLMMs-Lab/lmms-eval/pull/1261" target="_blank" rel="noreferrer">#1261</a>
+                                        <a href="https://github.com/EvolvingLMMs-Lab/lmms-eval/pull/1269" target="_blank" rel="noreferrer">#1269</a>
+                                        <a href="https://github.com/EvolvingLMMs-Lab/lmms-eval/issues/1260" target="_blank" rel="noreferrer">#1260</a>
+                                        <a href="https://github.com/EvolvingLMMs-Lab/lmms-eval/issues/1244" target="_blank" rel="noreferrer">#1244</a>
+                                    </span>
+                                </li>
+                                <li>
+                                    Fixed bugs across vLLM, InternVL, OCRBench, and VSI-Bench to improve inference backend stability and benchmark correctness.
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -1660,11 +1901,31 @@
           lazyVideos.forEach(function (video) {
             videoObserver.observe(video);
           });
-        } else {
-          lazyVideos.forEach(loadLazyVideo);
-        }
-      });
-    </script>
+	        } else {
+	          lazyVideos.forEach(loadLazyVideo);
+	        }
+
+	        document.querySelectorAll('.project-video-panel').forEach(function (panel) {
+	          var video = panel.querySelector('video');
+	          var playButton = panel.querySelector('.project-video-play');
+
+	          if (!video || !playButton) {
+	            return;
+	          }
+
+	          playButton.addEventListener('click', function () {
+	            panel.classList.add('is-playing');
+	            video.controls = true;
+	            var playPromise = video.play();
+	            if (playPromise) {
+	              playPromise.catch(function () {
+	                panel.classList.remove('is-playing');
+	              });
+	            }
+	          });
+	        });
+	      });
+	    </script>
 </body>
 
 </html>
