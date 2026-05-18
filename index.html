@@ -12,49 +12,200 @@
 
     <!-- Custom Styles -->
     <style>
+          :root {
+            --bg: #05070d;
+            --bg-band: #080c14;
+            --surface: #0d141f;
+            --surface-raised: #121b2a;
+            --surface-soft: #17202e;
+            --border: #293548;
+            --border-soft: rgba(180, 196, 216, 0.16);
+            --text: #d8e0eb;
+            --text-strong: #f4f7fb;
+            --text-muted: #9baabd;
+            --link: #7cc7ff;
+            --accent-red: #d85445;
+            --accent-gold: #e2b86b;
+            --accent-blue: #5fb7ff;
+            --font-display: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+            --font-text: "SF Pro Text", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+            --font-ui: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+          }
           body {
-            font-family: Roboto, 'sans-serif';
+            font-family: var(--font-text);
             font-size: 16px;
-            background-color: #FFFFFF;
-            color: #4F6071;
+            font-weight: 400;
+            line-height: 1.62;
+            letter-spacing: 0;
+            background:
+              linear-gradient(180deg, #05070d 0%, #070b12 46%, #05070d 100%);
+            color: var(--text);
+            -webkit-font-smoothing: antialiased;
+            text-rendering: optimizeLegibility;
+          }
+          a {
+            color: var(--link);
+            text-decoration-color: rgba(124, 199, 255, 0.45);
+            text-underline-offset: 3px;
+          }
+          a:hover,
+          a:focus-visible {
+            color: #f0d9b5;
+            text-decoration-color: var(--accent-gold);
+          }
+          .header-detail a:hover,
+          .header-detail a:focus-visible,
+          .container p a:hover,
+          .container p a:focus-visible,
+          .container li a:hover,
+          .container li a:focus-visible,
+          .vspace-top-news a:hover,
+          .vspace-top-news a:focus-visible {
+            background: linear-gradient(90deg, #f8efe2 0%, var(--accent-gold) 46%, #de7a67 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            -webkit-text-fill-color: transparent;
+            text-decoration-color: rgba(226, 184, 107, 0.9);
+          }
+          a:focus-visible {
+            outline: 1px solid rgba(226, 184, 107, 0.55);
+            outline-offset: 3px;
+            border-radius: 3px;
           }
           h1 {
-              font-weight: 300;
-              font-size: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+            font-family: var(--font-display);
+            font-weight: 400;
+            font-size: 31px;
+            line-height: 1.18;
+            letter-spacing: 0;
+            color: var(--text-strong);
+          }
+          h1::before {
+            content: "";
+            width: 28px;
+            height: 1px;
+            background: linear-gradient(90deg, var(--accent-gold), rgba(216, 84, 69, 0.45));
+            flex: 0 0 auto;
           }
           #header {
-            background-color: #f4f4f4;
-            /*background-color: #FFFFFF;*/
+            position: relative;
+            overflow: hidden;
+            background:
+              linear-gradient(115deg, rgba(216, 84, 69, 0.16) 0%, rgba(216, 84, 69, 0.04) 24%, rgba(216, 84, 69, 0) 42%),
+              linear-gradient(145deg, #17130f 0%, #111827 42%, #0c1420 72%, #070b12 100%);
+            border-bottom: 1px solid rgba(226, 184, 107, 0.2);
+            box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.05), 0 28px 80px rgba(0, 0, 0, 0.25);
             display: flex;
             align-items: flex-end;
             padding-top:60px;
             padding-bottom:60px;
           }
+          #header::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+              linear-gradient(90deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0) 38%),
+              repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.025) 0 1px, transparent 1px 92px);
+            opacity: 0.35;
+            pointer-events: none;
+          }
+          #header::after {
+            content: "";
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            height: 2px;
+            background:
+              linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(5, 7, 13, 0.45)),
+              linear-gradient(90deg, transparent 0%, rgba(226, 184, 107, 0.68) 28%, rgba(216, 84, 69, 0.52) 58%, rgba(95, 183, 255, 0.24) 76%, transparent 100%);
+            pointer-events: none;
+          }
+          #header .container {
+            position: relative;
+            z-index: 1;
+          }
           #footer {
-            background-color: #FFFFFF;
+            background-color: var(--bg);
             padding:60px;
           }
           #portrait {
-            border: 3px solid white;
+            border: 1px solid rgba(226, 184, 107, 0.38);
+            border-radius: 4px;
+            box-shadow: 0 18px 45px rgba(0, 0, 0, 0.35);
           }
           #header-text {
             margin-top: 60px;
             margin-left: 220px;
           }
           #header-text-name {
-            font-size: 40px;
+            font-family: var(--font-display);
+            font-size: 42px;
+            font-weight: 500;
+            line-height: 1.08;
+            color: var(--text-strong);
+            letter-spacing: 0;
+          }
+          .header-tagline {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 4px;
+            color: #d8e0eb;
+            font-family: var(--font-ui);
+            font-size: 17px;
+            font-weight: 600;
+            line-height: 1.25;
+          }
+          .header-tagline span + span::before {
+            content: "";
+            display: inline-block;
+            width: 5px;
+            height: 5px;
+            margin-right: 10px;
+            border-radius: 50%;
+            background: var(--accent-gold);
+            vertical-align: middle;
+          }
+          .header-detail {
+            color: var(--text);
+            font-size: 16px;
+            line-height: 1.52;
+          }
+          .header-detail-group {
+            margin-top: 22px;
+          }
+          .header-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-top: 20px;
+          }
+          .header-links a {
+            min-height: 27px;
+            padding: 4px 0;
+            font-size: 13px;
           }
           #header-text-title {
               font-size: 17px;
+              color: var(--text);
           }
           #header-text-affiliation {
               font-size: 17px;
               margin-top: 10px;
+              color: var(--text);
           }
           #header-text-email {
             margin-top: 10px;
             font-size: 17px;
             font-style: italic;
+            color: var(--text-muted);
           }
           .header-text-desc {
             font-size: 20px;
@@ -69,13 +220,725 @@
             width: 150px;
           }
           .news-date {
-              font-weight: bold;
+            color: var(--accent-gold);
+            font-family: var(--font-ui);
+            font-weight: 600;
+          }
+          .news-highlight {
+            color: var(--accent-red);
+            font-weight: 600;
           }
           .paper-title {
-            font-weight: bold;
+            font-family: var(--font-display);
+            font-weight: 600;
+            line-height: 1.35;
+            color: var(--text-strong);
+          }
+          .paper-desc {
+            color: var(--text-muted);
           }
           .paper-authors {
             font-style: italic;
+            color: #c8d2df;
+          }
+          .container p,
+          .container li {
+            color: var(--text);
+            line-height: 1.62;
+          }
+          .paper-card {
+            position: relative;
+            overflow: visible;
+            margin-top: 38px;
+            padding: 0 0 46px;
+            background: transparent;
+            border: 0;
+            border-radius: 0;
+            box-shadow: none;
+          }
+          .paper-card::before {
+            display: none;
+          }
+          .paper-card + .paper-card {
+            margin-top: 4px;
+            padding-top: 50px;
+            border-top: 0;
+          }
+          .paper-card + .paper-card::before {
+            content: "";
+            display: block;
+            position: absolute;
+            top: 0;
+            right: 0;
+            left: 0;
+            height: 1px;
+            background:
+              linear-gradient(90deg, transparent 0%, rgba(118, 235, 214, 0) 8%, rgba(118, 235, 214, 0.34) 28%, rgba(221, 236, 241, 0.56) 50%, rgba(142, 170, 255, 0.32) 72%, rgba(142, 170, 255, 0) 92%, transparent 100%);
+            box-shadow:
+              0 0 10px rgba(118, 235, 214, 0.16),
+              0 0 18px rgba(142, 170, 255, 0.09);
+            pointer-events: none;
+          }
+          .paper-header {
+            display: grid;
+            grid-template-columns: clamp(320px, 40%, 440px) minmax(0, 1fr);
+            column-gap: 64px;
+            align-items: center;
+          }
+          .paper-copy {
+            min-width: 0;
+            padding-right: 0;
+          }
+          .paper-card .paper-title {
+            color: var(--text-strong);
+            max-width: 860px;
+            font-size: 20.5px;
+            line-height: 1.26;
+            text-wrap: balance;
+          }
+          .paper-meta {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 9px;
+            margin-bottom: 8px;
+          }
+          .paper-venue {
+            display: inline-flex;
+            align-items: center;
+            min-height: auto;
+            padding: 0;
+            color: rgba(226, 184, 107, 0.92);
+            background: transparent;
+            border: 0;
+            border-radius: 0;
+            font-family: var(--font-ui);
+            font-size: 13px;
+            font-weight: 600;
+            line-height: 1.2;
+          }
+          .paper-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 0;
+          }
+          .paper-links a {
+            min-height: 26px;
+            padding: 4px 0;
+            font-size: 13px;
+          }
+          .paper-card .paper-authors {
+            margin-top: 8px;
+            line-height: 1.45;
+          }
+          .paper-card .paper-authors b {
+            color: var(--text-strong);
+            font-weight: 800;
+            font-style: italic;
+          }
+          .paper-description {
+            max-width: 900px;
+            margin-top: 10px;
+            margin-bottom: 0;
+            line-height: 1.52;
+          }
+          .paper-visual {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            height: 100%;
+          }
+          .paper-visual img {
+            width: 100%;
+            max-width: none;
+            aspect-ratio: 1896 / 1044;
+            object-fit: contain;
+            border: 0;
+            border-radius: 4px;
+            background: #ffffff;
+            box-shadow: 0 18px 38px rgba(0, 0, 0, 0.2);
+          }
+          .paper-visual-poster img {
+            aspect-ratio: 3 / 2;
+            width: 92%;
+            align-self: center;
+          }
+          .paper-visual-casualhdr img {
+            aspect-ratio: 1707 / 869;
+          }
+          .paper-visual-siu3r img {
+            aspect-ratio: 2975 / 1823;
+          }
+          .siu3r-demo-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1.28fr) minmax(360px, 1fr);
+            gap: 16px;
+            align-items: center;
+          }
+          .siu3r-demo-card {
+            min-width: 0;
+          }
+          .siu3r-video-panel {
+            position: relative;
+            overflow: hidden;
+            background: #05070d;
+            border: 1px solid rgba(180, 196, 216, 0.14);
+            border-radius: 7px;
+            box-shadow:
+              0 10px 26px rgba(0, 0, 0, 0.2),
+              0 0 0 1px rgba(255, 255, 255, 0.035);
+          }
+          .siu3r-video-panel video {
+            display: block;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            object-fit: contain;
+            background: #05070d;
+          }
+          .siu3r-result-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 8px;
+          }
+          .siu3r-result-grid .siu3r-video-panel video {
+            aspect-ratio: 4 / 3;
+          }
+          .siu3r-demo-caption {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            margin-top: 8px;
+            line-height: 1.3;
+          }
+          .siu3r-demo-caption span:first-child {
+            color: var(--text-strong);
+            font-family: var(--font-ui);
+            font-size: 13.5px;
+            font-weight: 600;
+          }
+          .siu3r-demo-caption span + span {
+            color: var(--text-muted);
+            font-size: 12.5px;
+          }
+          .casualhdr-demo-grid {
+            display: grid;
+            gap: 16px;
+            max-width: 760px;
+            margin: 0 auto;
+          }
+          .casualhdr-demo-card {
+            min-width: 0;
+          }
+	          .casualhdr-video-panel {
+	            position: relative;
+	            overflow: hidden;
+	            background: #05070d;
+	            border: 0;
+	            border-radius: 4px;
+	            box-shadow: none;
+          }
+          .casualhdr-video-panel video {
+            display: block;
+            width: 100%;
+            aspect-ratio: 1920 / 1400;
+            object-fit: contain;
+            background: #05070d;
+          }
+          .casualhdr-demo-caption {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            margin-top: 8px;
+            line-height: 1.3;
+          }
+          .casualhdr-demo-caption span:first-child {
+            color: var(--text-strong);
+            font-family: var(--font-ui);
+            font-size: 13.5px;
+            font-weight: 600;
+          }
+          .casualhdr-demo-caption span + span {
+            color: var(--text-muted);
+            font-size: 12.5px;
+          }
+          .paper-demo {
+            margin-top: 22px;
+            padding-top: 0;
+            border-top: 0;
+          }
+          .paper-demo-body-compact {
+            width: 85%;
+            margin-right: auto;
+            margin-left: auto;
+          }
+          .paper-demo-body-wide {
+            width: 95%;
+            margin-right: auto;
+            margin-left: auto;
+          }
+          .paper-demo-head {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 10px;
+          }
+          .paper-demo-title {
+            color: var(--text-strong);
+            font-family: var(--font-display);
+            font-weight: 600;
+          }
+          .paper-demo-note {
+            color: var(--text-muted);
+            font-size: 13.5px;
+            text-align: right;
+          }
+          .paper-media-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px 16px;
+          }
+          .paper-media-card {
+            background: transparent;
+          }
+          .paper-media-pair {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 1px;
+            overflow: hidden;
+            background: rgba(180, 196, 216, 0.1);
+            border-radius: 7px;
+            box-shadow:
+              0 10px 26px rgba(0, 0, 0, 0.18),
+              0 0 0 1px rgba(255, 255, 255, 0.035);
+          }
+          .paper-media-single {
+            grid-template-columns: 1fr;
+          }
+          .paper-media-card .paper-media-single video {
+            aspect-ratio: 16 / 9;
+            object-fit: contain;
+          }
+          .emoflow-demo-layout {
+            display: grid;
+            gap: 14px;
+          }
+          .emoflow-demo-section {
+            padding: 0;
+            background: transparent;
+            border: 0;
+            border-radius: 0;
+          }
+          .emoflow-demo-section-head {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 10px;
+          }
+          .emoflow-demo-section-title {
+            color: var(--text-strong);
+            font-family: var(--font-display);
+            font-size: 15px;
+            font-weight: 600;
+            letter-spacing: 0;
+          }
+          .emoflow-demo-section-note {
+            color: var(--text-muted);
+            font-size: 12.5px;
+            text-align: left;
+          }
+          .emoflow-carousel-controls {
+            display: flex;
+            flex: 0 0 auto;
+            align-items: center;
+            gap: 2px;
+            padding: 3px;
+            background:
+              linear-gradient(180deg, rgba(244, 247, 251, 0.08), rgba(244, 247, 251, 0.025));
+            border: 1px solid rgba(180, 196, 216, 0.18);
+            border-radius: 999px;
+            box-shadow:
+              inset 0 1px 0 rgba(255, 255, 255, 0.06),
+              0 10px 22px rgba(0, 0, 0, 0.16);
+            backdrop-filter: blur(10px);
+          }
+          .emoflow-carousel-button {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 34px;
+            height: 28px;
+            padding: 0;
+            color: var(--text-strong);
+            background: transparent;
+            border: 0;
+            border-radius: 999px;
+            font-family: var(--font-ui);
+            font-size: 0;
+            line-height: 1;
+            cursor: pointer;
+            transition:
+              background-color 180ms ease,
+              color 180ms ease,
+              transform 180ms ease;
+          }
+          .emoflow-carousel-button::before {
+            content: "";
+            width: 8px;
+            height: 8px;
+            border-top: 2px solid currentColor;
+            border-right: 2px solid currentColor;
+          }
+          .emoflow-carousel-button[data-carousel-prev]::before {
+            transform: translateX(2px) rotate(-135deg);
+          }
+          .emoflow-carousel-button[data-carousel-next]::before {
+            transform: translateX(-2px) rotate(45deg);
+          }
+          .emoflow-carousel-button:hover,
+          .emoflow-carousel-button:focus-visible {
+            color: #f0d9b5;
+            background: rgba(226, 184, 107, 0.14);
+            outline: none;
+            transform: translateY(-1px);
+          }
+          .emoflow-carousel-button:disabled {
+            color: rgba(216, 224, 235, 0.28);
+            cursor: default;
+            transform: none;
+          }
+          .emoflow-carousel-button:disabled:hover {
+            background: transparent;
+          }
+          .emoflow-carousel-track {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding-bottom: 2px;
+            scroll-behavior: smooth;
+            scroll-snap-type: x mandatory;
+            scrollbar-width: none;
+            -webkit-overflow-scrolling: touch;
+          }
+          .emoflow-carousel-track::-webkit-scrollbar {
+            display: none;
+          }
+          .emoflow-carousel-slide {
+            flex: 0 0 100%;
+            min-width: 0;
+            scroll-snap-align: start;
+          }
+          .emoflow-carousel-compact .emoflow-carousel-slide {
+            flex-basis: calc((100% - 20px) / 3);
+          }
+          .emoflow-feature-video,
+          .emoflow-flow-strip {
+            display: grid;
+            gap: 10px;
+          }
+          .emoflow-flow-strip {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+          }
+	          .emoflow-video-panel {
+	            position: relative;
+	            overflow: hidden;
+	            background: #000000;
+	            border-radius: 4px;
+	            box-shadow: none;
+	          }
+          .emoflow-video-panel video {
+            display: block;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            object-fit: contain;
+            background: #000000;
+          }
+          .emoflow-demo-section-hero .emoflow-video-panel video {
+            aspect-ratio: 1158 / 330;
+            object-fit: contain;
+            object-position: center;
+          }
+          .emoflow-video-caption {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            margin-top: 8px;
+            line-height: 1.3;
+          }
+          .emoflow-video-caption span:first-child {
+            color: var(--text-strong);
+            font-family: var(--font-ui);
+            font-size: 13px;
+            font-weight: 600;
+          }
+          .emoflow-video-caption span + span {
+            color: var(--text-muted);
+            font-size: 12.5px;
+          }
+          .paper-media-panel {
+            position: relative;
+            overflow: hidden;
+            background: #090d15;
+          }
+          .paper-media-panel img,
+          .paper-media-card video {
+            display: block;
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            object-fit: cover;
+            background: #090d15;
+          }
+          .paper-media-label {
+            position: absolute;
+            left: 8px;
+            bottom: 8px;
+            padding: 2px 6px;
+            background: rgba(5, 7, 13, 0.56);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 999px;
+            color: rgba(220, 231, 244, 0.92);
+            font-family: var(--font-ui);
+            font-size: 11px;
+            font-weight: 500;
+            line-height: 1.25;
+          }
+          .paper-media-caption {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            padding: 9px 2px 0;
+            line-height: 1.3;
+          }
+          .paper-media-caption span:first-child {
+            color: var(--text-strong);
+            font-family: var(--font-ui);
+            font-size: 13.5px;
+            font-weight: 600;
+          }
+          .paper-media-caption span:last-child {
+            color: var(--text-muted);
+            font-size: 12.5px;
+          }
+          .project-list {
+            display: grid;
+            gap: 16px;
+            margin-top: 24px;
+          }
+          .project-card {
+            display: grid;
+            grid-template-columns: 230px minmax(0, 1fr);
+            gap: 22px;
+            padding: 18px;
+            background: rgba(18, 27, 42, 0.72);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+          }
+          .project-card img {
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            object-fit: cover;
+            border: 1px solid var(--border-soft);
+            border-radius: 6px;
+          }
+          .project-card .paper-title {
+            font-size: 17.5px;
+            line-height: 1.32;
+          }
+          .project-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 8px;
+          }
+          .project-links a {
+            min-height: 26px;
+            padding: 4px 0;
+            font-size: 13px;
+          }
+          .header-links a,
+          .paper-links a,
+          .project-links a {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            overflow: hidden;
+            border: 0;
+            border-radius: 4px;
+            background:
+              linear-gradient(90deg, rgba(226, 184, 107, 0.18), rgba(216, 84, 69, 0.11)) 0 100% / 0 100% no-repeat;
+            color: #d9e2ee;
+            font-family: var(--font-ui);
+            font-weight: 500;
+            line-height: 1;
+            text-decoration: none;
+            transition:
+              background-size 260ms ease,
+              color 260ms ease,
+              transform 260ms ease;
+          }
+          .header-links a::before,
+          .paper-links a::before,
+          .project-links a::before {
+            content: "";
+            position: absolute;
+            right: 14px;
+            bottom: 3px;
+            left: 0;
+            height: 1px;
+            background: linear-gradient(90deg, rgba(226, 184, 107, 0.9), rgba(216, 84, 69, 0.72));
+            opacity: 0;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition:
+              opacity 220ms ease,
+              transform 260ms ease;
+          }
+          .header-links a::after,
+          .paper-links a::after,
+          .project-links a::after {
+            content: "↗";
+            margin-left: 1px;
+            color: rgba(226, 184, 107, 0.9);
+            font-size: 10px;
+            font-weight: 600;
+            line-height: 1;
+            opacity: 0.7;
+            transform: translateY(-1px);
+            transition:
+              opacity 220ms ease,
+              transform 260ms ease;
+          }
+          .header-links a:hover,
+          .paper-links a:hover,
+          .project-links a:hover,
+          .header-links a:focus-visible,
+          .paper-links a:focus-visible,
+          .project-links a:focus-visible {
+            background-size: 100% 100%;
+            color: var(--text-strong);
+            outline: none;
+            transform: translateY(-0.5px);
+          }
+          .header-links a:hover::before,
+          .paper-links a:hover::before,
+          .project-links a:hover::before,
+          .header-links a:focus-visible::before,
+          .paper-links a:focus-visible::before,
+          .project-links a:focus-visible::before {
+            opacity: 0.88;
+            transform: scaleX(1);
+          }
+          .header-links a:hover::after,
+          .paper-links a:hover::after,
+          .project-links a:hover::after,
+          .header-links a:focus-visible::after,
+          .paper-links a:focus-visible::after,
+          .project-links a:focus-visible::after {
+            opacity: 0.95;
+            transform: translate(2px, -3px);
+          }
+          .header-links a:active,
+          .paper-links a:active,
+          .project-links a:active {
+            transform: translateY(0);
+          }
+          @media (prefers-reduced-motion: reduce) {
+            .header-links a,
+            .paper-links a,
+            .project-links a,
+            .header-links a::before,
+            .paper-links a::before,
+            .project-links a::before,
+            .header-links a::after,
+            .paper-links a::after,
+            .project-links a::after {
+              transition: none;
+            }
+          }
+          .project-card p {
+            margin-top: 10px;
+            margin-bottom: 0;
+            line-height: 1.55;
+          }
+          .detail-list {
+            padding-left: 0;
+            margin-top: 14px;
+            list-style: none;
+          }
+          .detail-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(180, 196, 216, 0.12);
+            line-height: 1.5;
+          }
+          .detail-list li:last-child {
+            border-bottom: 0;
+          }
+          @media (max-width: 767.98px) {
+            .paper-card {
+              margin-top: 32px;
+              padding: 0 0 38px;
+            }
+            .paper-card + .paper-card {
+              padding-top: 40px;
+            }
+            .paper-demo-body-compact {
+              width: 100%;
+            }
+            .paper-demo-body-wide {
+              width: 100%;
+            }
+            .project-card {
+              grid-template-columns: 1fr;
+            }
+          }
+          @media (max-width: 991.98px) {
+            .paper-header {
+              grid-template-columns: 1fr;
+              row-gap: 16px;
+            }
+            .paper-media-grid {
+              grid-template-columns: 1fr;
+            }
+            .siu3r-demo-grid {
+              grid-template-columns: 1fr;
+            }
+            .emoflow-carousel-compact .emoflow-carousel-slide {
+              flex-basis: 100%;
+            }
+            .emoflow-flow-strip {
+              grid-template-columns: 1fr;
+            }
+          }
+          @media (max-width: 575.98px) {
+            .paper-demo-head {
+              display: block;
+            }
+            .paper-demo-note {
+              margin-top: 4px;
+              text-align: left;
+            }
+            .paper-media-grid {
+              grid-template-columns: 1fr;
+            }
+            .paper-media-pair {
+              grid-template-columns: 1fr;
+            }
+            .siu3r-result-grid {
+              grid-template-columns: 1fr;
+            }
+            .emoflow-demo-section-head {
+              display: block;
+            }
+            .emoflow-demo-section-note {
+              margin-top: 4px;
+              text-align: left;
+            }
           }
     </style>
 </head>
@@ -91,29 +954,27 @@
                 <div class="col">
                   <div id='header-text-name'>
                       Wenpu Li(李文朴)
-                  </div>                  
-                  <div id='header-text-title'>
-                        🤔 <h5 style="display: inline;"><b>Think Different</b></h5> 🚀 <h5 style="display: inline;"><b>Go Further</b></h5>
-                  <!-- 🤔 <p style="font-size: 20px;"><b>Think Different</b></p> 🚀 <p style="font-size: 20px;"><b>Go Further</b></p> -->
                   </div>
-                </br>
-                    <div id='header-text-title'>
-                        🧑🏻‍🔬 Research Assistant, <a href="https://ethliup.github.io/">Computer Vision and Geometric Learning lab (CVGL) </a>
-                    </div>
-                    <div id='header-text-affiliation'>
-                        🏢 Westlake University, School of Engineering </br>
-                        <a href="https://en-soe.westlake.edu.cn/OurSchool/program/programAI/">Department of Artificial Intelligence and Data Science (AI)</a></br>
-                    </div>
-                  <div id='header-text-title'>
-                        📭 liwenpu (at) westlake (dot) edu (dot) cn
+                  <div class='header-tagline'>
+                        <span>Think Different</span>
+                        <span>Go Further</span>
                   </div>
-                  <div>
-                    <a href="https://github.com/akawincent">[GitHub]</a>
-                    <a href="https://scholar.google.com/citations?user=C0mNwPkAAAAJ&hl=en">[Google Scholar]</a>
-                    <a href="https://www.zhihu.com/people/wincent-84">[Zhihu]</a>
-                    <!-- <a href="https://twitter.com/vincesitzmann">[Twitter]</a> -->
-                    <!-- <a href="https://sigmoid.social/@vsitzmann">[Mastodon]</a> -->
-                    <!-- <a href="docs/cv_vincent_sitzmann.pdf">[Download CV]</a> -->
+                    <div class='header-detail-group'>
+                        <div class='header-detail'>
+                            Research Assistant, <a href="https://ethliup.github.io/">Spatial Intelligence and Robotics Lab (SIR Lab)</a>
+                        </div>
+                        <div class='header-detail'>
+                            Westlake University, School of Engineering<br>
+                            <a href="https://en-soe.westlake.edu.cn/OurSchool/program/programAI/">Department of Artificial Intelligence and Data Science (AI)</a>
+                        </div>
+                        <div class='header-detail'>
+                            liwenpu (at) westlake (dot) edu (dot) cn
+                        </div>
+                    </div>
+                  <div class='header-links'>
+                    <a href="https://github.com/akawincent" target="_blank" rel="noreferrer">GitHub</a>
+                    <a href="https://scholar.google.com/citations?user=C0mNwPkAAAAJ&hl=en" target="_blank" rel="noreferrer">Google Scholar</a>
+                    <a href="https://www.zhihu.com/people/wincent-84" target="_blank" rel="noreferrer">Zhihu</a>
                   </div>
 
                 </div>
@@ -125,181 +986,511 @@
     <div class='container'>
         <div class='row vspace-top'>
             <div class='col offset-sm-1'>
-                <h1>👋 Bio</h1>
+                <h1>Biography</h1>
                 <p>
-                    I am currently a Research Assistant at <a href="https://ethliup.github.io/">Computer Vision and Geometric Learning lab (CVGL) </a>
+                    I am currently a Research Assistant at <a href="https://ethliup.github.io/">Spatial Intelligence and Robotics Lab (SIR Lab)</a>
                     supervised by <a href="https://en.westlake.edu.cn/faculty/peidong-liu.html">Prof. Peidong Liu</a>.
-                    I obtained bachelor degree of Information Engineering from Guangdong University of Technology in 2024.
-                    Previously, I worked as a research intern in CVGL during my senior year, focusing on 3D reconstruction.
-                    In the summer of 2023, I visited the University of Cambridge to study deep learning and computer vision.
+                    I obtained a B.Eng. in Information Engineering from Guangdong University of Technology in 2024.
+                    Previously, I worked as a research intern in SIR Lab during my senior year, focusing on 3D reconstruction.
+                    In summer 2023, I visited the University of Cambridge to study deep learning and computer vision.
                     Before that, under the supervision of <a href="https://english.gdut.edu.cn/info/1025/1101.htm">Prof. Wei Meng</a>,
                     I studied robotics and the application of computer vision in intelligent robots, such as VO/VIO/SLAM.
-                    </br> </br>
-                    My research interest lies in 3D vision and Robotics. 
-                    I aim to construct a representation of the real world in computers that mirrors human visual perception, 
-                    fully utilizing latent information in 2D images such as blur, optical flow, events, or camera poses. 
-                    I believe if we can reconstruct 3D/4D scenes in real-time from a video and obatain more information such as mesh, surface normal, texture, material and scene flow,   
-                    it will helps robots to think more like humans so that they know how to efficiently interact with the real world. 
+                </p>
+                <p>
+                    My research interest lies in 3D vision and Robotics.
+                    I aim to construct a representation of the real world in computers that mirrors human visual perception,
+                    fully utilizing latent information in 2D images such as blur, optical flow, events, or camera poses.
+                    I believe that reconstructing 3D/4D scenes in real time from video, along with richer signals such as mesh, surface normal, texture, material, and scene flow,
+                    can help robots reason more like humans and interact with the real world more efficiently.
                 </p>
 
 
+               <!--
                <div class='vspace-top'>
-                    <h1>🌟 News</h1>
-               </div>
+	                    <h1>News</h1>
+	               </div>
 
                <div class='row vspace-top-news'>
                    <div class="col-sm-2 news-date">
                         07/2024
-                   </div>
-                   <div class="col">
-                        🥳 <p style="color: red; display: inline;">Paper acceptation:</p> Our paper BeNeRF is accepted to ECCV 2024! Thanks to all collaborators!
-                   </div>
-                </div>
+	                   </div>
+	                   <div class="col">
+	                        <span class='news-highlight'>Paper accepted:</span> Our paper BeNeRF was accepted to ECCV 2024. Thanks to all collaborators!
+	                   </div>
+	                </div>
 
                <div class='row vspace-top-news'>
                    <div class="col-sm-2 news-date">
                         06/2024
-                   </div>
-                   <div class="col">
-                        🧑🏻‍🎓 I have graduated with a B.Eng from Guangdong University of Technology and received the Outstanding Graduate Honor!
-                   </div>
-               </div>
+	                   </div>
+	                   <div class="col">
+	                        I graduated with a B.Eng. from Guangdong University of Technology and received the Outstanding Graduate Honor.
+	                   </div>
+	               </div>
 
                <div class='row vspace-top-news'>
                     <div class="col-sm-2 news-date">
                         05/2024
-                    </div>
-                    <div class="col">
-                        📜 I have finished my bachelor's thesis and received the Outstanding Bachelor Thesis Award!
-                    </div>
-                </div>
+	                    </div>
+	                    <div class="col">
+	                        I finished my bachelor's thesis and received the Outstanding Bachelor Thesis Award.
+	                    </div>
+	                </div>
 
                 <div class='row vspace-top-news'>
                     <div class="col-sm-2 news-date">
                         08/2023
-                    </div>
-                    <div class="col">
-                        🛠️ Start my 1-year internship at <a href="https://ethliup.github.io/">Computer Vision and Geometric Learning lab (CVGL) </a> at Westlake University.
-                    </div>
-                </div>
+	                    </div>
+	                    <div class="col">
+		                        Started a one-year internship at <a href="https://ethliup.github.io/">Spatial Intelligence and Robotics Lab (SIR Lab)</a> at Westlake University.
+		                    </div>
+		                </div>
 
                 <div class='row vspace-top-news'>
                     <div class="col-sm-2 news-date">
                         07/2023
-                    </div>
-                    <div class="col">
-                        📚 Start my 1-month visiting to study computer vision at Homerton College, University of Cambridge.
-                    </div>
-                </div>
+	                    </div>
+	                    <div class="col">
+		                        Started a one-month visit to study computer vision at Homerton College, University of Cambridge.
+		                    </div>
+		                </div>
+                -->
 
-<!--                <div class='row vspace-top-news'>-->
-<!--                    <div class="col-sm-2 news-date">-->
-<!--                        January 2021-->
-<!--                    </div>-->
-<!--                    <div class="col">-->
-<!--		    	I published a <a href="https://github.com/vsitzmann/awesome-implicit-representations">-->
-<!--                        reading list on neural implicit representations</a> on github that I give students to get started in this area, inspired by the awesome-computer-vision list with extra commentary &amp; notes. Check it out!-->
-<!--                    </div>-->
-<!--                </div>-->
-
-<!--                <div class='row vspace-top-news'>-->
-<!--                    <div class="col-sm-2 news-date">-->
-<!--                        January 2021-->
-<!--                    </div>-->
-<!--                    <div class="col">-->
-<!--		    I am now serving as an academic advisor to <a href="https://preferred.jp/en/news/pr20210113/">Preferred Networks, Inc</a>!-->
-<!--                    </div>-->
-<!--                </div>-->
-
-<!--                <div class='row vspace-top-news'>-->
-<!--                    <div class="col-sm-2 news-date">-->
-<!--                        June 2020-->
-<!--                    </div>-->
-<!--                    <div class="col">-->
-<!--                        I just graduated Stanford with my <a href="docs/self_supervised_scene_rep_learning_vsitzmann.pdf">-->
-<!--                        thesis on Self-supervised Scene Representation Learning</a>. There's a few interesting thoughts in there - -->
-<!--                        especially check out the introduction and conclusion!-->
-<!--                    </div>-->
-<!--                </div>-->
-
-<!--                <div class='row vspace-top-news'>-->
-<!--                    <div class="col-sm-2 news-date">-->
-<!--                        March 2020-->
-<!--                    </div>-->
-<!--                    <div class="col">-->
-<!--                        Our CVPR tutorial on Neural Rendering is on youtube, free to watch for everyone!-->
-<!--                        Here's the <a href="https://www.youtube.com/watch?v=LCTYRqW-ne8">link to the morning session</a> - -->
-<!--                        at 2:20:00, I'm giving an overview over Novel View Synthesis.-->
-<!--                        Here's the <a href="https://www.youtube.com/watch?v=JlyGNvbGKB8">link to the afternoon session</a>.-->
-<!--                    </div>-->
-<!--                </div>-->
-
-<!--                <div class='row vspace-top-news'>-->
-<!--                    <div class="col-sm-2 news-date">-->
-<!--                        November 2019-->
-<!--                    </div>-->
-
-<!--                    <div class="col">-->
-<!--		    	Our paper "Scene Representation Networks: Continuous 3D-Structure-Aware Neural Scene Representations" wins an honorable mention for "Outstanding New Directions" at NeurIPS 2019! Watch my talk <a href="https://slideslive.com/38921749/track-1-session-3">here</a>.-->
-<!--                    </div>-->
-<!--                </div>-->
-
-
-<!--                <div class='row vspace-top-news'>-->
-<!--                    <div class="col-sm-2 news-date">-->
-<!--                        May 2019-->
-<!--                    </div>-->
-
-<!--                    <div class="col">-->
-<!--                        I will join Prof. Noah Snavely's group at the Google NYC office over the summer and continue working-->
-<!--                        on  deep learning for scene understanding and novel view synthesis.-->
-<!--                    </div>-->
-<!--                </div>-->
-
-
-                <div class='vspace-top'>
-                    <h1>📖 Publications</h1>
+	                <div class='vspace-top'>
+                    <h1>Publications</h1>
                 </div>
 
                 <p> * denotes equal contribution or advising; &dagger; denotes corresponding author</p>
 
-                <div class='row vspace-top'>
-                    <div class="col-sm-3">
-                        <img src='imgs/benerf_pipeline.png' class='img-fluid' width="230" height="140" >
+                <div class='paper-card'>
+                    <div class='paper-header'>
+                        <div class='paper-visual paper-visual-poster'>
+                            <img src='EMoFlow/assets/emoflow_poster.png' class='img-fluid' width="380" height="253" alt="E-MoFlow poster">
+                        </div>
+
+                        <div class='paper-copy'>
+                            <div class='paper-title'>
+                                E-MoFlow: Learning Egomotion and Optical Flow from Event Data via Implicit Regularization
+                            </div>
+                            <div class='paper-meta'>
+                                <span class='paper-venue'>NeurIPS 2025</span>
+                                <div class='paper-links'>
+                                    <a href="https://akawincent.github.io/EMoFlow" target="_blank" rel="noreferrer">Project page</a>
+                                    <a href="https://arxiv.org/abs/2510.12753" target="_blank" rel="noreferrer">Paper</a>
+                                    <a href="https://github.com/WU-CVGL/E-MoFlow" target="_blank" rel="noreferrer">Code</a>
+                                </div>
+                            </div>
+                            <div class='paper-authors'>
+                                <b>Wenpu Li*</b>, Bangyan Liao*, Yi Zhou, Qi Xu, Pian Wan, Peidong Liu†
+                            </div>
+
+                            <p class='paper-description'>E-MoFlow jointly learns 6-DoF egomotion and optical flow from events in a fully unsupervised paradigm, without explicit depth estimation.</p>
+
+                        </div>
                     </div>
 
-                    <div class="col">
-                        <div class='paper-title'>
-                            BeNeRF: Neural Radiance Fields from a Single Blurry Image and Event Stream
+                    <div class='paper-demo'>
+                        <div class='paper-demo-head'>
+                            <div class='paper-demo-title'>Event streams to motion and flow</div>
+                            <div class='paper-demo-note'>Qualitative results on MVSEC and DSEC benchmarks.</div>
                         </div>
-                        <div class='paper-desc'>
-                            ECCV 2024
+                        <div class='emoflow-demo-layout paper-demo-body-compact'>
+                            <div class='emoflow-demo-section emoflow-demo-section-hero' data-emoflow-carousel>
+                                <div class='emoflow-demo-section-head'>
+                                    <div>
+                                        <div class='emoflow-demo-section-title'>MVSEC</div>
+                                    </div>
+                                    <div class='emoflow-carousel-controls'>
+                                        <button class='emoflow-carousel-button' type='button' data-carousel-prev aria-label='Previous MVSEC demo'>&lsaquo;</button>
+                                        <button class='emoflow-carousel-button' type='button' data-carousel-next aria-label='Next MVSEC demo'>&rsaquo;</button>
+                                    </div>
+                                </div>
+                                <div class='emoflow-carousel-track'>
+                                    <div class='emoflow-carousel-slide'>
+                                        <div class='emoflow-video-panel'>
+                                            <video autoplay muted loop playsinline preload="metadata">
+                                                <source src="EMoFlow/demo/indoor_flying_1_dt_4_web.mp4" type="video/mp4">
+                                            </video>
+                                            <span class='paper-media-label'>MVSEC</span>
+                                        </div>
+                                    <div class='emoflow-video-caption'>
+                                        <span>Indoor Flying 1</span>
+                                        <span>original event stream v.s. predicted optical flow &amp; deblured event stream</span>
+                                    </div>
+                                </div>
+                                    <div class='emoflow-carousel-slide'>
+                                        <div class='emoflow-video-panel'>
+                                            <video autoplay muted loop playsinline preload="metadata">
+                                                <source src="EMoFlow/demo/indoor_flying_2_dt_4_web.mp4" type="video/mp4">
+                                            </video>
+                                            <span class='paper-media-label'>MVSEC</span>
+                                        </div>
+                                    <div class='emoflow-video-caption'>
+                                        <span>Indoor Flying 2</span>
+                                        <span>original event stream v.s. predicted optical flow &amp; deblured event stream</span>
+                                    </div>
+                                </div>
+                                    <div class='emoflow-carousel-slide'>
+                                        <div class='emoflow-video-panel'>
+                                            <video autoplay muted loop playsinline preload="metadata">
+                                                <source src="EMoFlow/demo/indoor_flying_3_dt_4_web.mp4" type="video/mp4">
+                                            </video>
+                                            <span class='paper-media-label'>MVSEC</span>
+                                        </div>
+                                    <div class='emoflow-video-caption'>
+                                        <span>Indoor Flying 3</span>
+                                        <span>original event stream v.s. predicted optical flow &amp; deblured event stream</span>
+                                    </div>
+                                </div>
+                                    <div class='emoflow-carousel-slide'>
+                                        <div class='emoflow-video-panel'>
+                                            <video autoplay muted loop playsinline preload="metadata">
+                                                <source src="EMoFlow/demo/outdoor_day_1_dt_4_web.mp4" type="video/mp4">
+                                            </video>
+                                            <span class='paper-media-label'>MVSEC</span>
+                                        </div>
+                                    <div class='emoflow-video-caption'>
+                                        <span>Outdoor Day 1</span>
+                                        <span>original event stream v.s. predicted optical flow &amp; deblured event stream</span>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+
+                            <div class='emoflow-demo-section' data-emoflow-carousel>
+                                <div class='emoflow-demo-section-head'>
+                                    <div>
+                                        <div class='emoflow-demo-section-title'>DSEC</div>
+                                    </div>
+                                    <div class='emoflow-carousel-controls'>
+                                        <button class='emoflow-carousel-button' type='button' data-carousel-prev aria-label='Previous DSEC demo'>&lsaquo;</button>
+                                        <button class='emoflow-carousel-button' type='button' data-carousel-next aria-label='Next DSEC demo'>&rsaquo;</button>
+                                    </div>
+                                </div>
+                                <div class='emoflow-carousel-track emoflow-carousel-compact'>
+                                    <div class='emoflow-carousel-slide paper-media-card'>
+                                        <div class='emoflow-video-panel'>
+                                            <video autoplay muted loop playsinline preload="metadata">
+                                                <source src="EMoFlow/demo/interlaken_01_a_pred_flow.mp4" type="video/mp4">
+                                            </video>
+                                            <span class='paper-media-label'>DSEC</span>
+                                        </div>
+                                        <div class='paper-media-caption'>
+                                            <span>Interlaken 01a</span>
+                                            <span>predicted optical flow</span>
+                                        </div>
+                                    </div>
+                                    <div class='emoflow-carousel-slide paper-media-card'>
+                                        <div class='emoflow-video-panel'>
+                                            <video autoplay muted loop playsinline preload="metadata">
+                                                <source src="EMoFlow/demo/thun_01_a_pred_flow.mp4" type="video/mp4">
+                                            </video>
+                                            <span class='paper-media-label'>DSEC</span>
+                                        </div>
+                                        <div class='paper-media-caption'>
+                                            <span>Thun 01a</span>
+                                            <span>predicted optical flow</span>
+                                        </div>
+                                    </div>
+                                    <div class='emoflow-carousel-slide paper-media-card'>
+                                        <div class='emoflow-video-panel'>
+                                            <video autoplay muted loop playsinline preload="metadata">
+                                                <source src="EMoFlow/demo/thun_01_b_pred_flow.mp4" type="video/mp4">
+                                            </video>
+                                            <span class='paper-media-label'>DSEC</span>
+                                        </div>
+                                        <div class='paper-media-caption'>
+                                            <span>Thun 01b</span>
+                                            <span>predicted optical flow</span>
+                                        </div>
+                                    </div>
+                                    <div class='emoflow-carousel-slide paper-media-card'>
+                                        <div class='emoflow-video-panel'>
+                                            <video autoplay muted loop playsinline preload="metadata">
+                                                <source src="EMoFlow/demo/zurich_city_15_a_pred_flow.mp4" type="video/mp4">
+                                            </video>
+                                            <span class='paper-media-label'>DSEC</span>
+                                        </div>
+                                        <div class='paper-media-caption'>
+                                            <span>Zurich City 15a</span>
+                                            <span>predicted optical flow</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class='paper-authors'>
-                            <b>Wenpu Li*</b>, Pian Wan*, Peng Wang*, Jinghang Li, Yi Zhou, Peidong Liu†
-                        </div>
-                        <div>
-                            <a href="https://akawincent.github.io/BeNeRF">[Project page]</a>
-                            <a href="https://arxiv.org/abs/2407.02174v2">[Paper]</a>
-                            <a href="https://github.com/WU-CVGL/BeNeRF">[Code]</a>
-                            <!-- <a href="https://colab.research.google.com/drive/1PeL5oJ_eraLEdzTEVPLBwoM2pyv26WcU?usp=sharing">[Colab]</a> -->
+                    </div>
+                </div>
+
+                <div class='paper-card'>
+                    <div class='paper-header'>
+                        <div class='paper-visual paper-visual-siu3r'>
+                            <img src='imgs/siu3r/teaser.png' class='img-fluid' width="380" height="233" alt="SIU3R teaser">
                         </div>
 
-                        <p> TL;DR: We explore the possibility of recovering the neural radiance fields and camera motion trajectory from a single blurry image</p>
+                        <div class='paper-copy'>
+                            <div class='paper-title'>
+                                SIU3R: Simultaneous Scene Understanding and 3D Reconstruction Beyond Feature Alignment
+                            </div>
+                            <div class='paper-meta'>
+                                <span class='paper-venue'>NeurIPS 2025 Spotlight</span>
+                                <div class='paper-links'>
+                                    <a href="https://insomniaaac.github.io/siu3r/" target="_blank" rel="noreferrer">Project page</a>
+                                    <a href="https://arxiv.org/abs/2507.02705" target="_blank" rel="noreferrer">Paper</a>
+                                    <a href="https://github.com/WU-CVGL/SIU3R" target="_blank" rel="noreferrer">Code</a>
+                                </div>
+                            </div>
+                            <div class='paper-authors'>
+                                Qi Xu*, Dongxu Wei*&dagger;, Lingzhe Zhao, <b>Wenpu Li</b>, Zhangchi Huang, Shunping Ji&dagger;, Peidong Liu&dagger;
+                            </div>
 
+                            <p class='paper-description'>SIU3R is a feed-forward framework for simultaneous scene understanding and reconstruction from unposed images, unifying reconstruction with semantic, instance, panoptic, and text-referred segmentation.</p>
+
+                        </div>
+                    </div>
+
+                    <div class='paper-demo'>
+                        <div class='paper-demo-head'>
+                            <div class='paper-demo-title'>Unposed images to 3D understanding and reconstruction</div>
+                            <div class='paper-demo-note'>Qualitative results on real-world</div>
+                        </div>
+                        <div class='siu3r-demo-grid paper-demo-body-wide'>
+                            <div class='siu3r-demo-card'>
+                                <div class='siu3r-video-panel'>
+                                    <video data-lazy-video autoplay muted loop playsinline preload="none" poster="imgs/siu3r/teaser.png">
+                                        <source data-src="imgs/siu3r/siu3r_page.mp4" type="video/mp4">
+                                    </video>
+                                    <span class='paper-media-label'>Overview</span>
+                                </div>
+                            </div>
+                            <div class='siu3r-demo-card'>
+                                <div class='siu3r-result-grid'>
+                                    <div class='siu3r-video-panel'>
+                                        <video data-lazy-video autoplay muted loop playsinline preload="none">
+                                            <source data-src="imgs/siu3r/group_meeting_rgb.mp4" type="video/mp4">
+                                        </video>
+                                        <span class='paper-media-label'>RGB</span>
+                                    </div>
+                                    <div class='siu3r-video-panel'>
+                                        <video data-lazy-video autoplay muted loop playsinline preload="none">
+                                            <source data-src="imgs/siu3r/group_meeting_sem.mp4" type="video/mp4">
+                                        </video>
+                                        <span class='paper-media-label'>Sem</span>
+                                    </div>
+                                    <div class='siu3r-video-panel'>
+                                        <video data-lazy-video autoplay muted loop playsinline preload="none">
+                                            <source data-src="imgs/siu3r/group_meeting_ins.mp4" type="video/mp4">
+                                        </video>
+                                        <span class='paper-media-label'>Ins</span>
+                                    </div>
+                                    <div class='siu3r-video-panel'>
+                                        <video data-lazy-video autoplay muted loop playsinline preload="none">
+                                            <source data-src="imgs/siu3r/toilet_rgb.mp4" type="video/mp4">
+                                        </video>
+                                        <span class='paper-media-label'>RGB</span>
+                                    </div>
+                                    <div class='siu3r-video-panel'>
+                                        <video data-lazy-video autoplay muted loop playsinline preload="none">
+                                            <source data-src="imgs/siu3r/toilet_sem.mp4" type="video/mp4">
+                                        </video>
+                                        <span class='paper-media-label'>Sem</span>
+                                    </div>
+                                    <div class='siu3r-video-panel'>
+                                        <video data-lazy-video autoplay muted loop playsinline preload="none">
+                                            <source data-src="imgs/siu3r/toilet_ins.mp4" type="video/mp4">
+                                        </video>
+                                        <span class='paper-media-label'>Ins</span>
+                                    </div>
+                                    <div class='siu3r-video-panel'>
+                                        <video data-lazy-video autoplay muted loop playsinline preload="none">
+                                            <source data-src="imgs/siu3r/tatami_room_rgb.mp4" type="video/mp4">
+                                        </video>
+                                        <span class='paper-media-label'>RGB</span>
+                                    </div>
+                                    <div class='siu3r-video-panel'>
+                                        <video data-lazy-video autoplay muted loop playsinline preload="none">
+                                            <source data-src="imgs/siu3r/tatami_room_sem.mp4" type="video/mp4">
+                                        </video>
+                                        <span class='paper-media-label'>Sem</span>
+                                    </div>
+                                    <div class='siu3r-video-panel'>
+                                        <video data-lazy-video autoplay muted loop playsinline preload="none">
+                                            <source data-src="imgs/siu3r/tatami_room_ins.mp4" type="video/mp4">
+                                        </video>
+                                        <span class='paper-media-label'>Ins</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class='paper-card'>
+                    <div class='paper-header'>
+                        <div class='paper-visual paper-visual-casualhdr'>
+                            <img src='imgs/casualhdrsplat_pipeline.png' class='img-fluid' width="380" height="193" alt="Casual3DHDR pipeline">
+                        </div>
+
+                        <div class='paper-copy'>
+                            <div class='paper-title'>
+                                Casual3DHDR: Deblurring High Dynamic Range 3D Gaussian Splatting from Casually Captured Videos
+                            </div>
+                            <div class='paper-meta'>
+                                <span class='paper-venue'>ACM MM 2025</span>
+                                <div class='paper-links'>
+                                    <a href="https://lingzhezhao.github.io/CasualHDRSplat/" target="_blank" rel="noreferrer">Project page</a>
+                                    <a href="https://arxiv.org/abs/2504.17728" target="_blank" rel="noreferrer">Paper</a>
+                                    <a href="https://github.com/WU-CVGL/CasualHDRSplat" target="_blank" rel="noreferrer">Code</a>
+                                </div>
+                            </div>
+                            <div class='paper-authors'>
+                                Shucheng Gong*, Lingzhe Zhao*, <b>Wenpu Li*</b>, Hong Xie†, Yin Zhang, Shiyu Zhao, Peidong Liu†
+                            </div>
+
+                            <p class='paper-description'>Casual3DHDR reconstructs sharp HDR Gaussians from videos, jointly optimizing exposure time, CRF, camera motion, and the HDR scene.</p>
+
+                        </div>
+                    </div>
+
+                    <div class='paper-demo'>
+                        <div class='paper-demo-head'>
+                            <div class='paper-demo-title'>Casual video to HDR 3D scene</div>
+                            <div class='paper-demo-note'>Novel-view spiral rendering from the reconstructed HDR 3D scene.</div>
+                        </div>
+                        <div class='casualhdr-demo-grid'>
+                            <div class='casualhdr-demo-card'>
+                                <div class='casualhdr-video-panel'>
+                                    <video data-lazy-video autoplay muted loop playsinline preload="none" poster="imgs/casualhdrsplat_teaser.png">
+                                        <source data-src="https://lingzhezhao.github.io/CasualHDRSplat/static/videos/novel_view_spiral_traj.mp4" type="video/mp4">
+                                    </video>
+                                    <span class='paper-media-label'>Novel view</span>
+                                </div>
+                                <div class='casualhdr-demo-caption'>
+                                    <span>Spiral rendering</span>
+                                    <span>Sharp LDR video rendered from the HDR 3D scene with varying exposure time.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class='paper-card'>
+                    <div class='paper-header'>
+                        <div class='paper-visual'>
+                            <img src='imgs/benerf_pipeline.png' class='img-fluid' width="380" height="209" >
+                        </div>
+
+                        <div class='paper-copy'>
+                            <div class='paper-title'>
+                                BeNeRF: Neural Radiance Fields from a Single Blurry Image and Event Stream
+                            </div>
+                            <div class='paper-meta'>
+                                <span class='paper-venue'>ECCV 2024</span>
+                                <div class='paper-links'>
+                                    <a href="https://akawincent.github.io/BeNeRF" target="_blank" rel="noreferrer">Project page</a>
+                                    <a href="https://arxiv.org/abs/2407.02174v2" target="_blank" rel="noreferrer">Paper</a>
+                                    <a href="https://github.com/WU-CVGL/BeNeRF" target="_blank" rel="noreferrer">Code</a>
+                                </div>
+                            </div>
+                            <div class='paper-authors'>
+                                <b>Wenpu Li*</b>, Pian Wan*, Peng Wang*, Jinghang Li, Yi Zhou, Peidong Liu†
+                            </div>
+
+                            <p class='paper-description'>From a single blurry image and event stream, BeNeRF recovers neural radiance fields and camera motion, then decodes the scene into a clear, vivid novel-view video stream.</p>
+
+                        </div>
+                    </div>
+
+                    <div class='paper-demo'>
+                        <div class='paper-demo-head'>
+                            <div class='paper-demo-title'>Single blur to vivid video stream</div>
+                            <div class='paper-demo-note'>Original blurry images vs. decoded sharp videos.</div>
+                        </div>
+                        <div class='paper-media-grid paper-demo-body-wide'>
+                            <div class='paper-media-card'>
+                                <div class='paper-media-pair'>
+                                    <div class='paper-media-panel'>
+                                        <img src="BeNeRF/results/e2nerf_lego_1_input.jpg" alt="Lego blurred input">
+                                        <span class='paper-media-label'>Blurry input</span>
+                                    </div>
+                                    <div class='paper-media-panel'>
+                                        <video autoplay muted loop playsinline preload="metadata" poster="BeNeRF/results/e2nerf_lego_1_input.jpg">
+                                            <source src="BeNeRF/results/e2nerf_lego_1_alive.mp4" type="video/mp4">
+                                        </video>
+                                        <span class='paper-media-label'>Decoded stream</span>
+                                    </div>
+                                </div>
+                                <div class='paper-media-caption'>
+                                    <span>Lego</span>
+                                    <span>Real-world scene</span>
+                                </div>
+                            </div>
+                            <div class='paper-media-card'>
+                                <div class='paper-media-pair'>
+                                    <div class='paper-media-panel'>
+                                        <img src="BeNeRF/results/e2nerf_toys_1_input.jpg" alt="Toys blurred input">
+                                        <span class='paper-media-label'>Blurry input</span>
+                                    </div>
+                                    <div class='paper-media-panel'>
+                                        <video autoplay muted loop playsinline preload="metadata" poster="BeNeRF/results/e2nerf_toys_1_input.jpg">
+                                            <source src="BeNeRF/results/e2nerf_toys_1_alive.mp4" type="video/mp4">
+                                        </video>
+                                        <span class='paper-media-label'>Decoded stream</span>
+                                    </div>
+                                </div>
+                                <div class='paper-media-caption'>
+                                    <span>Toys</span>
+                                    <span>Real-world scene</span>
+                                </div>
+                            </div>
+                            <div class='paper-media-card'>
+                                <div class='paper-media-pair'>
+                                    <div class='paper-media-panel'>
+                                        <img src="BeNeRF/results/livingroom_input.png" alt="Living Room blurred input">
+                                        <span class='paper-media-label'>Blurry input</span>
+                                    </div>
+                                    <div class='paper-media-panel'>
+                                        <video autoplay muted loop playsinline preload="metadata" poster="BeNeRF/results/livingroom_input.png">
+                                            <source src="BeNeRF/results/livingrom_alive.mp4" type="video/mp4">
+                                        </video>
+                                        <span class='paper-media-label'>Decoded stream</span>
+                                    </div>
+                                </div>
+                                <div class='paper-media-caption'>
+                                    <span>Living Room</span>
+                                    <span>Synthetic scene</span>
+                                </div>
+                            </div>
+                            <div class='paper-media-card'>
+                                <div class='paper-media-pair'>
+                                    <div class='paper-media-panel'>
+                                        <img src="BeNeRF/results/pinkcastle_input.png" alt="Pink Castle blurred input">
+                                        <span class='paper-media-label'>Blurry input</span>
+                                    </div>
+                                    <div class='paper-media-panel'>
+                                        <video autoplay muted loop playsinline preload="metadata" poster="BeNeRF/results/pinkcastle_input.png">
+                                            <source src="BeNeRF/results/pinkcastle_alive.mp4" type="video/mp4">
+                                        </video>
+                                        <span class='paper-media-label'>Decoded stream</span>
+                                    </div>
+                                </div>
+                                <div class='paper-media-caption'>
+                                    <span>Pink Castle</span>
+                                    <span>Synthetic scene</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
                 <div class='vspace-top'>
-                    <h1>🤖 Projects</h1>
+                    <h1>Robotics Experience</h1>
                 </div>
 
-                <div class='row vspace-top'>
-                    <div class="col-sm-3">
-                        <img src='imgs/Robot.jpg' class='img-fluid' style="width: 90%; height: 88%;">
-                    </div>
-
-                    <div class="col">
+                <div class='project-list'>
+                    <div class='project-card'>
+                        <img src='imgs/Robot.jpg' class='img-fluid'>
+                        <div>
                         <div class='paper-title'>
                             Wheeled Robot Equipped with a Robotic Arm for Automatic Storage
                         </div>
@@ -307,26 +1498,18 @@
                             Automatic Storage/Retrieval System at Robocup China open, 2021
                         </div>
                         <div class='paper-authors'>
-                            Qingrui Zhu, <b>Wenpu Li</b>, Wenbin Zheng, Yong Zhang, Junyao Li
-                        </div>                        
-                        <div>
-                            <!-- <a href="https://yilundu.github.io/wide_baseline/">[Project page]</a> -->
-                            <!-- <a href="https://arxiv.org/abs/2407.02174v2">[Paper]</a> -->
-                            <a href="https://github.com/akawincent/2021-robocup-AS-RS">[Code]</a>
-                            <!-- <a href="https://colab.research.google.com/drive/1PeL5oJ_eraLEdzTEVPLBwoM2pyv26WcU?usp=sharing">[Colab]</a> -->
+                            Qingrui Zhu*, <b>Wenpu Li*</b>, Wenbin Zheng, Yong Zhang, Junyao Li
                         </div>
-                        
-                        <p> TL;DR: I developed programs for robot navigation and localization, object recognition, and control algorithms to finish automatic storage task.</p>
-
-                    </div>
-                </div>
-
-                <div class='row vspace-top'>
-                    <div class="col-sm-3">
-                        <img src='imgs/drone.jpg' class='img-fluid' style="width: 90%; height: 88%;">
+                        <div class='project-links'>
+                            <a href="https://github.com/akawincent/2021-robocup-AS-RS" target="_blank" rel="noreferrer">Code</a>
+                        </div>
+                        <p>TL;DR: I developed software for robot navigation, localization, object recognition, and control to complete the automatic storage task.</p>
+                        </div>
                     </div>
 
-                    <div class="col">
+                    <div class='project-card'>
+                        <img src='imgs/drone.jpg' class='img-fluid'>
+                        <div>
                         <div class='paper-title'>
                             Self-Localization UAV Leveraging Visual Odometry
                         </div>
@@ -334,32 +1517,28 @@
                             Course Project, 2023
                         </div>
                         <div class='paper-authors'>
-                            <b>Wenpu Li</b>, Guohua Zhang
-                        </div>                        
-                        <div>
-                            <!-- <a href="https://yilundu.github.io/wide_baseline/">[Project page]</a> -->
-                            <!-- <a href="https://arxiv.org/abs/2407.02174v2">[Paper]</a> -->
-                            <a href="https://github.com/StarLab317/VIO-Framework-for-Copter">[Code for drone]</a>
-                            <a href="https://github.com/akawincent/ZED-data-collector">[Code for ZED Camera]</a>
-                            <a href="https://www.bilibili.com/video/BV1ux4y1o75J/?spm_id_from=333.999.0.0&vd_source=12e3449d762538513192f94a7582c3bd">[Video]</a>
-                            <!-- <a href="https://colab.research.google.com/drive/1PeL5oJ_eraLEdzTEVPLBwoM2pyv26WcU?usp=sharing">[Colab]</a> -->
+                            <b>Wenpu Li*</b>, Guohua Zhang*
                         </div>
-                        
-                        <p  style="display: inline;"> 
-                            TL;DR: Working with <a href="https://github.com/guohua-zhang">GuoHua Zhang</a> on deploying Intel T265 Camera and Visual Odometry for Localization of UAV.
-                            I also used ZED Camera to collect dataset to evaluate the performance of 
-                            <a href="https://github.com/raulmur/ORB_SLAM2">ORB-SLAM2</a> and 
+                        <div class='project-links'>
+                            <a href="https://github.com/StarLab317/VIO-Framework-for-Copter" target="_blank" rel="noreferrer">Drone code</a>
+                            <a href="https://github.com/akawincent/ZED-data-collector" target="_blank" rel="noreferrer">ZED collector</a>
+                            <a href="https://www.bilibili.com/video/BV1ux4y1o75J/?spm_id_from=333.999.0.0&vd_source=12e3449d762538513192f94a7582c3bd" target="_blank" rel="noreferrer">Video</a>
+                        </div>
+                        <p>
+                            TL;DR: I worked with <a href="https://github.com/guohua-zhang">Guohua Zhang</a> on deploying an Intel T265 camera and visual odometry for UAV localization.
+                            I also used a ZED camera to collect datasets for evaluating
+                            <a href="https://github.com/raulmur/ORB_SLAM2">ORB-SLAM2</a> and
                             <a href="https://github.com/JiatianWu/stereo-dso">Stereo-DSO</a>.
                         </p>
-
+                        </div>
                     </div>
                 </div>
 
                 <div class='vspace-top'>
-                    <h1>🗣️ Language</h1>
+                    <h1>Languages</h1>
                 </div>
 
-                <ul>
+                <ul class='detail-list'>
                     <li>Chinese: Native Language</li>
                     <li>Japanese: Native Language</li>
                     <li>English: Intermediate Level</li>
@@ -367,22 +1546,29 @@
                 </ul>
 
                 <div class='vspace-top'>
-                    <h1>🏅 Awards</h1>
+                    <h1>Awards</h1>
                 </div>
 
-                <ul>
+                <ul class='detail-list'>
                     <li><b>National Bronze Medal</b> in Automatic Storage/Retrieval System at Robocup China open, 2021</li>
                     <li><b>National Second Prize</b> in Automatic Storage/Retrieval System at Robocup China open, 2022</li>
                     <li><b>National Second Prize</b> in iCAN Innovation Contest, 2022</li>
                     <li><b>National Third Prize</b> in Blue Bridge Cup, 2022</li>
                     <li><b>First Prize</b> in Contemporary Undergraduate Mathematical Contest in Modeling(Guangdong Division), 2022</li>
                     <li><b>Third Prize</b> in National Undergraduate Electronics Design Contest(Guangdong Division), 2021</li>
-                    <li><b>Second Prize</b> in Excellent Student Scholarship, Guangdong University of Technology, 2023</li>
-                    <li><b>Third Prize</b> in Fangzhi Scholarship, Guangdong University of Technology, 2021</li>
                 </ul>
 
                 <div class='vspace-top'>
-                    <h1>🎀 Acknowledgement</h1>
+                    <h1>Academic Services</h1>
+                </div>
+
+                <ul class='detail-list'>
+                    <li><b>Journal Reviewer:</b> T-PAMI</li>
+                    <li><b>Conference Reviewer:</b> CVPR, NeurIPS, ECCV, IROS</li>
+                </ul>
+
+                <div class='vspace-top'>
+                    <h1>Acknowledgements</h1>
 
                     <p> Thanks to Wenyi Zhang for taking the portrait for my homepage.</p>
 
@@ -400,6 +1586,85 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('[data-emoflow-carousel]').forEach(function (carousel) {
+          var track = carousel.querySelector('.emoflow-carousel-track');
+          var previous = carousel.querySelector('[data-carousel-prev]');
+          var next = carousel.querySelector('[data-carousel-next]');
+
+          if (!track || !previous || !next) {
+            return;
+          }
+
+          var getStep = function () {
+            var slide = track.querySelector('.emoflow-carousel-slide');
+            if (!slide) {
+              return track.clientWidth;
+            }
+
+            var trackStyle = window.getComputedStyle(track);
+            var gap = parseFloat(trackStyle.columnGap || trackStyle.gap || '0');
+            return slide.getBoundingClientRect().width + (Number.isFinite(gap) ? gap : 0);
+          };
+
+          var updateButtons = function () {
+            var maxScroll = track.scrollWidth - track.clientWidth;
+            previous.disabled = track.scrollLeft <= 2;
+            next.disabled = track.scrollLeft >= maxScroll - 2;
+          };
+
+          previous.addEventListener('click', function () {
+            track.scrollBy({ left: -getStep(), behavior: 'smooth' });
+          });
+
+          next.addEventListener('click', function () {
+            track.scrollBy({ left: getStep(), behavior: 'smooth' });
+          });
+
+          track.addEventListener('scroll', function () {
+            window.requestAnimationFrame(updateButtons);
+          }, { passive: true });
+
+          window.addEventListener('resize', updateButtons);
+          updateButtons();
+        });
+
+        var loadLazyVideo = function (video) {
+          if (video.dataset.loaded === 'true') {
+            return;
+          }
+
+          video.querySelectorAll('source[data-src]').forEach(function (source) {
+            source.src = source.dataset.src;
+          });
+          video.dataset.loaded = 'true';
+          video.load();
+          var playPromise = video.play();
+          if (playPromise) {
+            playPromise.catch(function () {});
+          }
+        };
+
+        var lazyVideos = Array.prototype.slice.call(document.querySelectorAll('video[data-lazy-video]'));
+        if ('IntersectionObserver' in window) {
+          var videoObserver = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+              if (entry.isIntersecting) {
+                loadLazyVideo(entry.target);
+                videoObserver.unobserve(entry.target);
+              }
+            });
+          }, { rootMargin: '360px 0px' });
+
+          lazyVideos.forEach(function (video) {
+            videoObserver.observe(video);
+          });
+        } else {
+          lazyVideos.forEach(loadLazyVideo);
+        }
+      });
+    </script>
 </body>
 
 </html>
