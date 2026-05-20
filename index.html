@@ -360,6 +360,14 @@
               0 0 18px rgba(142, 170, 255, 0.09);
             pointer-events: none;
           }
+          .paper-card-emoflow {
+            grid-template-columns: clamp(300px, 38%, 420px) minmax(0, 1fr);
+            column-gap: 68px;
+          }
+          .paper-demo,
+          .paper-copy {
+            align-self: center;
+          }
           .paper-header {
             display: contents;
           }
@@ -438,16 +446,6 @@
             justify-content: space-between;
             gap: 12px;
             margin-bottom: 8px;
-          }
-          .paper-demo-title {
-            color: rgba(166, 178, 196, 0.54);
-            font-family: var(--font-ui);
-            font-size: 10.5px;
-            font-weight: 600;
-            line-height: 1.2;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            white-space: nowrap;
           }
           .paper-demo-note {
             color: rgba(166, 178, 196, 0.72);
@@ -576,10 +574,118 @@
           .publication-demo-reel[data-siu3r-reel] .publication-demo-slide-fit-contain img {
             object-fit: cover;
           }
-          .publication-demo-reel[data-casualhdr-reel] video {
-            object-position: center 16%;
-            transform: scale(1.2);
-            transform-origin: center 16%;
+          .casualhdr-main-video {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            background: #020307;
+          }
+          .casualhdr-main-video video {
+            object-position: center top;
+            transform: scale(1.13);
+            transform-origin: center top;
+          }
+          .casualhdr-chart-inset {
+            position: absolute;
+            right: 8px;
+            top: 8px;
+            z-index: 2;
+            overflow: hidden;
+            width: 34%;
+            aspect-ratio: 3 / 1;
+            background: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 2px;
+            box-shadow: 0 9px 22px rgba(0, 0, 0, 0.38);
+            transform: scale(1.08);
+            transform-origin: top right;
+          }
+          .casualhdr-chart-inset video {
+            position: absolute;
+            bottom: -1px;
+            left: 50%;
+            width: auto;
+            max-width: none;
+            height: 350%;
+            object-fit: fill;
+            object-position: center bottom;
+            transform: translateX(-50%);
+            background: #ffffff;
+          }
+          .publication-demo-reel[data-casualhdr-reel] .publication-demo-label {
+            text-transform: none;
+          }
+          .publication-demo-reel[data-emoflow-reel] {
+            width: 100%;
+          }
+          .emoflow-compare {
+            position: absolute;
+            inset: 0;
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            align-items: center;
+            gap: 36px;
+            padding: 8px 10px;
+            background: #020307;
+          }
+          .emoflow-crop-pane {
+            position: relative;
+            height: 84%;
+            min-width: 0;
+            overflow: hidden;
+            background: #fafafa;
+            border-radius: 2px;
+          }
+          .emoflow-crop-pane video {
+            position: absolute;
+            top: -26.923%;
+            left: 0;
+            display: block;
+            width: auto;
+            max-width: none;
+            height: 126.923%;
+            object-fit: fill;
+            transform: translateX(var(--emoflow-video-x));
+            background: #fafafa;
+          }
+          .emoflow-crop-pane-input {
+            --emoflow-video-x: -3%;
+          }
+          .emoflow-crop-pane-output {
+            --emoflow-video-x: -41.5%;
+          }
+          .emoflow-flow-arrow {
+            position: absolute;
+            z-index: 2;
+            top: 50%;
+            left: 50%;
+            width: 34px;
+            height: 34px;
+            transform: translate(-50%, -50%);
+          }
+          .emoflow-flow-arrow::before,
+          .emoflow-flow-arrow::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            background: #00b8f5;
+            box-shadow: 0 0 12px rgba(0, 184, 245, 0.34);
+          }
+          .emoflow-flow-arrow::before {
+            right: 3px;
+            left: 0;
+            height: 4px;
+            border-radius: 999px;
+            transform: translateY(-50%);
+          }
+          .emoflow-flow-arrow::after {
+            right: 3px;
+            width: 15px;
+            height: 15px;
+            border-top: 4px solid #00b8f5;
+            border-right: 4px solid #00b8f5;
+            background: transparent;
+            transform: translateY(-50%) rotate(45deg);
           }
           .publication-demo-pair {
             display: grid;
@@ -612,7 +718,7 @@
             z-index: 2;
             right: 8px;
             bottom: 8px;
-            width: 28%;
+            width: 30%;
             aspect-ratio: 16 / 9;
             border: 1px solid rgba(255, 255, 255, 0.14);
             box-shadow: 0 8px 18px rgba(0, 0, 0, 0.32);
@@ -743,6 +849,14 @@
           .project-copy .paper-authors {
             margin-top: 8px;
           }
+          .robotics-list .project-card {
+            grid-template-columns: minmax(260px, 0.68fr) minmax(0, 1fr);
+            gap: 30px;
+          }
+          .robotics-list .project-video-panel {
+            max-width: 360px;
+            justify-self: center;
+          }
           .project-card img {
             width: 100%;
             aspect-ratio: 4 / 3;
@@ -772,7 +886,8 @@
             position: relative;
             display: inline-flex;
             align-items: center;
-            gap: 7px;
+            gap: 4px;
+            padding-right: 3px;
             overflow: hidden;
             border: 0;
             border-radius: 4px;
@@ -809,7 +924,7 @@
           .paper-links a::after,
           .project-links a::after {
             content: "↗";
-            margin-left: 1px;
+            margin-left: 0;
             color: rgba(226, 184, 107, 0.9);
             font-size: 10px;
             font-weight: 600;
@@ -847,7 +962,7 @@
           .paper-links a:focus-visible::after,
           .project-links a:focus-visible::after {
             opacity: 0.95;
-            transform: translate(2px, -3px);
+            transform: translate(1.5px, -3px);
           }
           .header-links a:active,
           .paper-links a:active,
@@ -1026,12 +1141,12 @@
 	              margin-right: 0;
 	              margin-left: 0;
 	            }
+            .publication-demo-reel[data-emoflow-reel] {
+              width: 100%;
+            }
             .publication-demo-toolbar {
               grid-template-columns: 1fr;
               gap: 7px;
-            }
-            .paper-demo-title {
-              white-space: normal;
             }
             .publication-demo-controls {
               justify-content: flex-start;
@@ -1207,7 +1322,7 @@
 
                 <p> * denotes equal contribution or advising; &dagger; denotes corresponding author</p>
 
-                <div class='paper-card'>
+                <div class='paper-card paper-card-emoflow'>
                     <div class='paper-header'>
 	                        <div class='paper-copy'>
                             <div class='paper-title'>
@@ -1230,78 +1345,77 @@
                         </div>
                     </div>
 
-		                    <div class='paper-demo publication-demo-reel' data-publication-demo data-emoflow-reel>
-		                        <div class='publication-demo-toolbar'>
-		                            <div class='paper-demo-title'>Demo reel</div>
-		                            <div class='publication-demo-controls'>
+			                    <div class='paper-demo publication-demo-reel' data-publication-demo data-emoflow-reel>
+			                        <div class='publication-demo-toolbar'>
+			                            <div class='publication-demo-controls'>
 		                                <div class='publication-demo-selector' aria-label='E-MoFlow demo selector'>
 		                                    <button class='publication-demo-chip' type='button' data-demo-target='emoflow-indoor-1' aria-pressed='true'>Indoor 1</button>
 		                                    <button class='publication-demo-chip' type='button' data-demo-target='emoflow-indoor-2' aria-pressed='false'>Indoor 2</button>
 		                                    <button class='publication-demo-chip' type='button' data-demo-target='emoflow-indoor-3' aria-pressed='false'>Indoor 3</button>
 		                                    <button class='publication-demo-chip' type='button' data-demo-target='emoflow-outdoor-1' aria-pressed='false'>Outdoor 1</button>
-		                                    <button class='publication-demo-chip' type='button' data-demo-target='emoflow-interlaken' aria-pressed='false'>Interlaken</button>
-		                                    <button class='publication-demo-chip' type='button' data-demo-target='emoflow-thun-a' aria-pressed='false'>Thun A</button>
-		                                    <button class='publication-demo-chip' type='button' data-demo-target='emoflow-thun-b' aria-pressed='false'>Thun B</button>
-		                                    <button class='publication-demo-chip' type='button' data-demo-target='emoflow-zurich' aria-pressed='false'>Zurich</button>
 	                                </div>
 	                            </div>
 	                        </div>
 	                        <div class='publication-demo-stage'>
 	                            <div class='publication-demo-slide publication-demo-slide-fit-contain is-active' data-demo-slide='emoflow-indoor-1'>
-	                                <video data-lazy-video autoplay muted loop playsinline preload="none">
-	                                    <source data-src="EMoFlow/demo/indoor_flying_1_dt_4_web.mp4" type="video/mp4">
-	                                </video>
-	                                <span class='publication-demo-label publication-demo-label-top'>MVSEC</span>
-	                                <span class='publication-demo-label publication-demo-label-bottom'>Indoor Flying 1</span>
+	                                <div class='emoflow-compare'>
+	                                    <div class='emoflow-crop-pane emoflow-crop-pane-input'>
+	                                        <video data-lazy-video autoplay muted loop playsinline preload="none">
+	                                            <source data-src="EMoFlow/demo/indoor_flying_1_dt_4_web.mp4" type="video/mp4">
+	                                        </video>
+	                                    </div>
+	                                    <div class='emoflow-flow-arrow' aria-hidden='true'></div>
+	                                    <div class='emoflow-crop-pane emoflow-crop-pane-output'>
+	                                        <video data-lazy-video autoplay muted loop playsinline preload="none">
+	                                            <source data-src="EMoFlow/demo/indoor_flying_1_dt_4_web.mp4" type="video/mp4">
+	                                        </video>
+	                                    </div>
+	                                </div>
 	                            </div>
 	                            <div class='publication-demo-slide publication-demo-slide-fit-contain' data-demo-slide='emoflow-indoor-2' hidden>
-	                                <video data-lazy-video autoplay muted loop playsinline preload="none">
-	                                    <source data-src="EMoFlow/demo/indoor_flying_2_dt_4_web.mp4" type="video/mp4">
-	                                </video>
-	                                <span class='publication-demo-label publication-demo-label-top'>MVSEC</span>
-	                                <span class='publication-demo-label publication-demo-label-bottom'>Indoor Flying 2</span>
+	                                <div class='emoflow-compare'>
+	                                    <div class='emoflow-crop-pane emoflow-crop-pane-input'>
+	                                        <video data-lazy-video autoplay muted loop playsinline preload="none">
+	                                            <source data-src="EMoFlow/demo/indoor_flying_2_dt_4_web.mp4" type="video/mp4">
+	                                        </video>
+	                                    </div>
+	                                    <div class='emoflow-flow-arrow' aria-hidden='true'></div>
+	                                    <div class='emoflow-crop-pane emoflow-crop-pane-output'>
+	                                        <video data-lazy-video autoplay muted loop playsinline preload="none">
+	                                            <source data-src="EMoFlow/demo/indoor_flying_2_dt_4_web.mp4" type="video/mp4">
+	                                        </video>
+	                                    </div>
+	                                </div>
 	                            </div>
 	                            <div class='publication-demo-slide publication-demo-slide-fit-contain' data-demo-slide='emoflow-indoor-3' hidden>
-	                                <video data-lazy-video autoplay muted loop playsinline preload="none">
-	                                    <source data-src="EMoFlow/demo/indoor_flying_3_dt_4_web.mp4" type="video/mp4">
-	                                </video>
-	                                <span class='publication-demo-label publication-demo-label-top'>MVSEC</span>
-	                                <span class='publication-demo-label publication-demo-label-bottom'>Indoor Flying 3</span>
+	                                <div class='emoflow-compare'>
+	                                    <div class='emoflow-crop-pane emoflow-crop-pane-input'>
+	                                        <video data-lazy-video autoplay muted loop playsinline preload="none">
+	                                            <source data-src="EMoFlow/demo/indoor_flying_3_dt_4_web.mp4" type="video/mp4">
+	                                        </video>
+	                                    </div>
+	                                    <div class='emoflow-flow-arrow' aria-hidden='true'></div>
+	                                    <div class='emoflow-crop-pane emoflow-crop-pane-output'>
+	                                        <video data-lazy-video autoplay muted loop playsinline preload="none">
+	                                            <source data-src="EMoFlow/demo/indoor_flying_3_dt_4_web.mp4" type="video/mp4">
+	                                        </video>
+	                                    </div>
+	                                </div>
 	                            </div>
 	                            <div class='publication-demo-slide publication-demo-slide-fit-contain' data-demo-slide='emoflow-outdoor-1' hidden>
-	                                <video data-lazy-video autoplay muted loop playsinline preload="none">
-	                                    <source data-src="EMoFlow/demo/outdoor_day_1_dt_4_web.mp4" type="video/mp4">
-	                                </video>
-	                                <span class='publication-demo-label publication-demo-label-top'>MVSEC</span>
-	                                <span class='publication-demo-label publication-demo-label-bottom'>Outdoor Day 1</span>
-	                            </div>
-	                            <div class='publication-demo-slide' data-demo-slide='emoflow-interlaken' hidden>
-	                                <video data-lazy-video autoplay muted loop playsinline preload="none">
-	                                    <source data-src="EMoFlow/demo/interlaken_01_a_pred_flow.mp4" type="video/mp4">
-	                                </video>
-	                                <span class='publication-demo-label publication-demo-label-top'>DSEC</span>
-	                                <span class='publication-demo-label publication-demo-label-bottom'>Interlaken 01a</span>
-	                            </div>
-	                            <div class='publication-demo-slide' data-demo-slide='emoflow-thun-a' hidden>
-	                                <video data-lazy-video autoplay muted loop playsinline preload="none">
-	                                    <source data-src="EMoFlow/demo/thun_01_a_pred_flow.mp4" type="video/mp4">
-	                                </video>
-	                                <span class='publication-demo-label publication-demo-label-top'>DSEC</span>
-	                                <span class='publication-demo-label publication-demo-label-bottom'>Thun 01a</span>
-	                            </div>
-	                            <div class='publication-demo-slide' data-demo-slide='emoflow-thun-b' hidden>
-	                                <video data-lazy-video autoplay muted loop playsinline preload="none">
-	                                    <source data-src="EMoFlow/demo/thun_01_b_pred_flow.mp4" type="video/mp4">
-	                                </video>
-	                                <span class='publication-demo-label publication-demo-label-top'>DSEC</span>
-	                                <span class='publication-demo-label publication-demo-label-bottom'>Thun 01b</span>
-	                            </div>
-	                            <div class='publication-demo-slide' data-demo-slide='emoflow-zurich' hidden>
-	                                <video data-lazy-video autoplay muted loop playsinline preload="none">
-	                                    <source data-src="EMoFlow/demo/zurich_city_15_a_pred_flow.mp4" type="video/mp4">
-	                                </video>
-	                                <span class='publication-demo-label publication-demo-label-top'>DSEC</span>
-	                                <span class='publication-demo-label publication-demo-label-bottom'>Zurich City 15a</span>
+	                                <div class='emoflow-compare'>
+	                                    <div class='emoflow-crop-pane emoflow-crop-pane-input'>
+	                                        <video data-lazy-video autoplay muted loop playsinline preload="none">
+	                                            <source data-src="EMoFlow/demo/outdoor_day_1_dt_4_web.mp4" type="video/mp4">
+	                                        </video>
+	                                    </div>
+	                                    <div class='emoflow-flow-arrow' aria-hidden='true'></div>
+	                                    <div class='emoflow-crop-pane emoflow-crop-pane-output'>
+	                                        <video data-lazy-video autoplay muted loop playsinline preload="none">
+	                                            <source data-src="EMoFlow/demo/outdoor_day_1_dt_4_web.mp4" type="video/mp4">
+	                                        </video>
+	                                    </div>
+	                                </div>
 	                            </div>
 	                        </div>
 	                    </div>
@@ -1332,8 +1446,7 @@
 
 		                    <div class='paper-demo publication-demo-reel' data-publication-demo data-siu3r-reel>
 		                        <div class='publication-demo-toolbar'>
-		                            <div class='paper-demo-title'>Demo reel</div>
-	                            <div class='publication-demo-controls'>
+		                            <div class='publication-demo-controls'>
 	                                <div class='publication-demo-selector' aria-label='SIU3R scene selector'>
 	                                    <button class='publication-demo-chip' type='button' data-siu3r-scene='overview' aria-pressed='true'>Overview</button>
 	                                    <button class='publication-demo-chip' type='button' data-siu3r-scene='group-meeting' aria-pressed='false'>Group Meeting</button>
@@ -1436,15 +1549,19 @@
                     </div>
 
 		                    <div class='paper-demo publication-demo-reel' data-publication-demo data-casualhdr-reel>
-		                        <div class='publication-demo-toolbar'>
-		                            <div class='paper-demo-title'>Demo reel</div>
-	                        </div>
 	                        <div class='publication-demo-stage'>
 	                            <div class='publication-demo-slide is-active' data-demo-slide='casualhdr-spiral'>
-	                                <video data-lazy-video autoplay muted loop playsinline preload="none" poster="imgs/casualhdrsplat_teaser.png">
-	                                    <source data-src="https://lingzhezhao.github.io/CasualHDRSplat/static/videos/novel_view_spiral_traj.mp4" type="video/mp4">
-	                                </video>
-	                                <span class='publication-demo-label publication-demo-label-top'>Novel-view spiral</span>
+	                                <div class='casualhdr-main-video'>
+	                                    <video data-lazy-video autoplay muted loop playsinline preload="none" poster="imgs/casualhdrsplat_teaser.png">
+	                                        <source data-src="https://lingzhezhao.github.io/CasualHDRSplat/static/videos/novel_view_spiral_traj.mp4" type="video/mp4">
+	                                    </video>
+	                                </div>
+	                                <div class='casualhdr-chart-inset' aria-hidden='true'>
+	                                    <video data-lazy-video autoplay muted loop playsinline preload="none">
+	                                        <source data-src="https://lingzhezhao.github.io/CasualHDRSplat/static/videos/novel_view_spiral_traj.mp4" type="video/mp4">
+	                                    </video>
+	                                </div>
+	                                <span class='publication-demo-label publication-demo-label-top'>NVS &amp; HDR EDIT</span>
 	                            </div>
 	                        </div>
 	                    </div>
@@ -1475,8 +1592,7 @@
 
 		                    <div class='paper-demo publication-demo-reel' data-publication-demo data-benerf-reel>
 		                        <div class='publication-demo-toolbar'>
-		                            <div class='paper-demo-title'>Demo reel</div>
-	                            <div class='publication-demo-controls'>
+		                            <div class='publication-demo-controls'>
 	                                <div class='publication-demo-selector' aria-label='BeNeRF scene selector'>
 	                                    <button class='publication-demo-chip' type='button' data-demo-target='benerf-lego' aria-pressed='true'>Lego</button>
 	                                    <button class='publication-demo-chip' type='button' data-demo-target='benerf-toys' aria-pressed='false'>Toys</button>
@@ -1554,7 +1670,7 @@
                     <h1>Robotics Experience</h1>
                 </div>
 
-	                <div class='project-list'>
+	                <div class='project-list robotics-list'>
 	                    <div class='project-card'>
 	                        <div class='project-video-panel project-video-panel-portrait'>
 		                            <video controls muted playsinline preload="metadata" poster="imgs/robotics/humanoid-cover-4x3.png">
@@ -1711,20 +1827,23 @@
     <script src="js/bootstrap.min.js"></script>
     <script>
       document.addEventListener('DOMContentLoaded', function () {
-        var loadLazyVideo = function (video) {
-          if (video.dataset.loaded === 'true') {
-            return;
-          }
-
-          video.querySelectorAll('source[data-src]').forEach(function (source) {
-            source.src = source.dataset.src;
-          });
-          video.dataset.loaded = 'true';
-          video.load();
+        var playVideo = function (video) {
           var playPromise = video.play();
           if (playPromise) {
             playPromise.catch(function () {});
           }
+        };
+
+        var loadLazyVideo = function (video) {
+          if (video.dataset.loaded !== 'true') {
+            video.querySelectorAll('source[data-src]').forEach(function (source) {
+              source.src = source.dataset.src;
+            });
+            video.dataset.loaded = 'true';
+            video.load();
+          }
+
+          playVideo(video);
         };
 
         var activatePublicationSlide = function (reel, target, shouldLoad) {
