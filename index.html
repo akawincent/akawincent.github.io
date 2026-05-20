@@ -189,14 +189,17 @@
             text-align: center;
           }
           .wordmark-w,
+          .wordmark-p,
           .wordmark-l {
             color: #fbfdff;
             font-weight: 390;
             font-variation-settings: "wght" 390;
           }
           .wordmark-w::before,
+          .wordmark-p::before,
           .wordmark-l::before,
           .wordmark-w::after,
+          .wordmark-p::after,
           .wordmark-l::after {
             content: attr(data-letter);
             position: absolute;
@@ -204,11 +207,13 @@
             pointer-events: none;
           }
           .wordmark-w::before,
+          .wordmark-p::before,
           .wordmark-l::before {
             color: rgba(255, 230, 178, 0.5);
             transform: translate(0.085em, -0.055em);
           }
           .wordmark-w::after,
+          .wordmark-p::after,
           .wordmark-l::after {
             color: rgba(232, 118, 92, 0.32);
             transform: translate(-0.07em, 0.06em);
@@ -1206,7 +1211,7 @@
 	                              <span class='wordmark-letter wordmark-w' data-letter='W'>W</span>
 	                              <span class='wordmark-letter wordmark-e'>e</span>
 	                              <span class='wordmark-letter wordmark-n'>n</span>
-	                              <span class='wordmark-letter wordmark-p'>p</span>
+	                              <span class='wordmark-letter wordmark-p' data-letter='p'>p</span>
 	                              <span class='wordmark-letter wordmark-u'>u</span>
 	                          </span>
 	                          <span class='wordmark-run' aria-hidden='true'>
